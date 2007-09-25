@@ -1,0 +1,129 @@
+TaskPaper file-type plugin and syntax file
+
+David O'Callaghan <david.ocallaghan@cs.tcd.ie>
+
+25th September 2007
+
+
+Introduction
+=============
+
+From the TaskPaper website (http://hogbaysoftware.com/projects/taskpaper):
+
+  "TaskPaper is a simple to-do list application that helps you stay
+organized. Unlike competing applications, TaskPaper is based on plain text
+files which offer you paper-like simplicity and ease of use." 
+
+TaskPaper is a to-do list application for Mac OS X based on the "Getting
+Things Done" approach of David Allen (http://www.davidco.com/). It supports
+the GTD notions of projects, tasks and contexts.
+
+This package contains a syntax file and a file-type plugin for the simple
+format used by the TaskPaper application. It is intended for Mac users who
+want to edit their TaskPaper lists in Vim from time to time (for example, in
+a SSH session, or on a non-Mac system) and for anyone who is looking for a
+simple to-do list format.
+
+Installation
+=============
+
+It should be safe to simply unpack the package into your .vim directory.
+It contains the following files:
+
+  doc/taskpaper.txt
+  doc/example.taskpaper
+  doc/taskpaper_licence.txt
+  ftplugin/taskpaper.vim
+  syntax/taskpaper.vim
+  ftdetect/taskpaper.vim
+
+Syntax
+=======
+
+The syntax file highlights project headings and task contexts (tags), and
+"greys out" completed tasks. 
+
+A project heading is a piece of text ending in a colon.  Projects can be
+folded using the "syntax" foldmethod.
+
+A task is a line beginning with a hyphen '-' and can have zero or more
+context tags.
+
+A context tag has the form "@tag".
+
+File-type Plugin
+=================
+
+The file-type plugin tries to make editing TaskPaper files in Vim more
+comfortable. 
+
+Vim can complete context names after the '@' using the keyword completion
+commands (e.g. Ctrl-X Ctrl-N).
+
+The plugin defines some new mappings: 
+    \td     Mark task as done
+    \tc     Show all tasks with context under cursor
+    \tp     Fold all projects
+    \ta     Show all projects and tasks
+
+Note: if <LocalLeader> has been changed then its value should be
+used instead of '\' in the mappings.
+
+Marking a task as done will add the "@done" context tag to the end of the
+task, and it will be greyed out by the syntax file.
+
+To show all tasks with a particular context tag, move the cursor over the
+desired context tag (e.g. using movement or search commands) and then use
+the \tc command. This will fold all the irrelevant tasks leaving only the
+tasks in the current context visible.
+
+To fold all projects leaving only the headings visible use the \tp command.
+Standard fold commands can be used to open (zo) and close (zc) individual
+projects.
+
+To show all projects and tasks use the \ta command. This disables folding so
+that the entire file is expanded.
+
+File-type Detection
+====================
+
+This package also contains a script to automatically use the TaskPaper file
+type for all files with the ".taskpaper" extension.
+
+Licence
+========
+
+Copyright (C) 2007 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+Acknowledgements
+=================
+
+The initial version of the ToggleDone() function was based on SwitchBox()
+from the VimOutliner Checkboxes script written by Noel Henson (available
+from http://www.vimoutliner.org).
+
+Context folding expression was based on a snippet from Vim Tip 282
+(http://vim.sourceforge.net/tips/tip.php?tip_id=282).
+
+Contact
+========
+
+The author of these Vim scripts is David O'Callaghan
+<david.ocallaghan@cs.tcd.ie>.
+
+For all information regarding the TaskPaper application itself please visit
+http://hogbaysoftware.com/projects/taskpaper/.
