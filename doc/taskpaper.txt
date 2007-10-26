@@ -1,4 +1,4 @@
-TaskPaper file-type plugin and syntax file
+*taskpaper* TaskPaper file-type plugin and syntax file
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
@@ -36,6 +36,16 @@ It contains the following files:
   ftplugin/taskpaper.vim
   syntax/taskpaper.vim
   ftdetect/taskpaper.vim
+
+To access this help file from within Vim you must first update your help 
+tags:
+
+  :helptags ~/.vim/doc
+
+The path may need to be modified depending on where you install to. Once
+you have done this you can access the help with this command:
+
+  :help taskpaper
 
 Syntax
 =======
