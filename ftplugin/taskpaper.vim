@@ -7,6 +7,11 @@
 " Last Change:  2007 Sep 25
 
 
+if exists("loaded_task_paper")
+    finish
+endif
+let loaded_task_paper = 1
+
 "add '@' to keyword character set so that we can complete contexts as keywords
 set iskeyword+=@-@
 
