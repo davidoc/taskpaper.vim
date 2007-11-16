@@ -13,7 +13,7 @@ endif
 let loaded_task_paper = 1
 
 "add '@' to keyword character set so that we can complete contexts as keywords
-set iskeyword+=@-@
+setlocal iskeyword+=@-@
 
 "show tasks from context under the cursor
 function! ShowContext()
