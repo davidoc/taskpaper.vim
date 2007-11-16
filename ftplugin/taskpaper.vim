@@ -19,7 +19,7 @@ set iskeyword+=@-@
 function! ShowContext()
     let s:wordUnderCursor = expand("<cword>")
     if(s:wordUnderCursor =~ "@\k*")
-        let @/ = s:wordUnderCursor
+        let @/ = "\\<".s:wordUnderCursor."\\>"
         "adapted from http://vim.sourceforge.net/tips/tip.php?tip_id=282
         set foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum)=~@/)\|\|(getline(v:lnum)=~@/)?0:1
         set foldmethod=expr foldlevel=0 foldcolumn=1 foldminlines=0
