@@ -128,7 +128,15 @@ from http://www.vimoutliner.org).
 Context folding expression was based on a snippet from Vim Tip 282
 (http://vim.sourceforge.net/tips/tip.php?tip_id=282).
 
-Thanks are due to 
+Thanks are due to a number of contributors who have supplied patches to
+improve TaskPaper.vim:
+
+ * Ben Armstron 
+    * various fixes that make the scripts more robust
+    * fix to show only complete tag matches
+    * include '_' in contexts
+ * Huahai Yang 
+    * fixed handling of indented tasks
 
 Contact
 ========
