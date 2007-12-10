@@ -16,7 +16,7 @@ let loaded_task_paper = 1
 setlocal iskeyword+=@-@
 
 "show tasks from context under the cursor
-function! ShowContext()
+function! s:ShowContext()
     let s:wordUnderCursor = expand("<cword>")
     if(s:wordUnderCursor =~ "@\k*")
         let @/ = "\\<".s:wordUnderCursor."\\>"
@@ -29,18 +29,18 @@ function! ShowContext()
     endif
 endfunction
 
-function! ShowAll()
+function! s:ShowAll()
     set nofoldenable
 endfunction  
 
-function! FoldAllProjects()
+function! s:FoldAllProjects()
     set foldmethod=syntax
     set foldenable
     %foldclose! 
 endfunction
 
 " toggle @done context tag on a task
-function! ToggleDone()
+function! s:ToggleDone()
     if (getline(".") =~ '^\s*- ')
         let isdone = strridx(getline("."),"@done")
         if (isdone != -1)
@@ -56,7 +56,7 @@ function! ToggleDone()
 
 endfunction
 
-map <buffer> <LocalLeader>td :call ToggleDone()<cr>
-map <buffer> <LocalLeader>tc :call ShowContext()<cr>
-map <buffer> <LocalLeader>ta :call ShowAll()<cr>
-map <buffer> <LocalLeader>tp :call FoldAllProjects()<cr>
+map <buffer> <LocalLeader>td :call <SID>ToggleDone()<cr>
+map <buffer> <LocalLeader>tc :call <SID>ShowContext()<cr>
+map <buffer> <LocalLeader>ta :call <SID>ShowAll()<cr>
+map <buffer> <LocalLeader>tp :call <SID>FoldAllProjects()<cr>

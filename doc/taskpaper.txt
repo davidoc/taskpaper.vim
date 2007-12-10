@@ -2,8 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-25th September 2007
-
+10th December 2007
 
 Introduction
 =============
@@ -128,6 +127,8 @@ from http://www.vimoutliner.org).
 
 Context folding expression was based on a snippet from Vim Tip 282
 (http://vim.sourceforge.net/tips/tip.php?tip_id=282).
+
+Thanks are due to 
 
 Contact
 ========
