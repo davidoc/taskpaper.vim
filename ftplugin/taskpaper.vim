@@ -41,7 +41,7 @@ endfunction
 
 " toggle @done context tag on a task
 function! ToggleDone()
-    if (getline(".") =~ "^\s*- ")
+    if (getline(".") =~ '^\s*- ')
         let isdone = strridx(getline("."),"@done")
         if (isdone != -1)
             substitute/ @done//
@@ -50,7 +50,10 @@ function! ToggleDone()
             substitute/$/ @done/
             echo "done!"
         endif
+    else 
+        echo "not a task."
     endif
+
 endfunction
 
 map <buffer> <LocalLeader>td :call ToggleDone()<cr>
