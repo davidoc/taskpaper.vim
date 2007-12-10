@@ -7,14 +7,14 @@ David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 Introduction
 =============
 
-From the TaskPaper website (http://hogbaysoftware.com/projects/taskpaper):
+From the TaskPaper website (<http://hogbaysoftware.com/projects/taskpaper>):
 
-  "TaskPaper is a simple to-do list application that helps you stay
-organized. Unlike competing applications, TaskPaper is based on plain text
-files which offer you paper-like simplicity and ease of use." 
+> "TaskPaper is a simple to-do list application that helps you stay
+> organized. Unlike competing applications, TaskPaper is based on plain text
+> files which offer you paper-like simplicity and ease of use." 
 
 TaskPaper is a to-do list application for Mac OS X based on the "Getting
-Things Done" approach of David Allen (http://www.davidco.com/). It supports
+Things Done" approach of David Allen (<http://www.davidco.com/>). It supports
 the GTD notions of projects, tasks and contexts.
 
 This package contains a syntax file and a file-type plugin for the simple
@@ -29,22 +29,22 @@ Installation
 It should be safe to simply unpack the package into your .vim directory.
 It contains the following files:
 
-  doc/taskpaper.txt
-  doc/example.taskpaper
-  doc/taskpaper_licence.txt
-  ftplugin/taskpaper.vim
-  syntax/taskpaper.vim
-  ftdetect/taskpaper.vim
+    doc/taskpaper.txt
+    doc/example.taskpaper
+    doc/taskpaper_licence.txt
+    ftplugin/taskpaper.vim
+    syntax/taskpaper.vim
+    ftdetect/taskpaper.vim
 
 To access this help file from within Vim you must first update your help 
 tags:
 
-  :helptags ~/.vim/doc
+    :helptags ~/.vim/doc
 
 The path may need to be modified depending on where you install to. Once
 you have done this you can access the help with this command:
 
-  :help taskpaper
+    :help taskpaper
 
 Syntax
 =======
@@ -70,27 +70,28 @@ Vim can complete context names after the '@' using the keyword completion
 commands (e.g. Ctrl-X Ctrl-N).
 
 The plugin defines some new mappings: 
+
     \td     Mark task as done
     \tc     Show all tasks with context under cursor
     \tp     Fold all projects
     \ta     Show all projects and tasks
 
-Note: if <LocalLeader> has been changed then its value should be
-used instead of '\' in the mappings.
+Note: if `<LocalLeader>` has been changed then its value should be
+used instead of `\` in the mappings.
 
 Marking a task as done will add the "@done" context tag to the end of the
 task, and it will be greyed out by the syntax file.
 
 To show all tasks with a particular context tag, move the cursor over the
 desired context tag (e.g. using movement or search commands) and then use
-the \tc command. This will fold all the irrelevant tasks leaving only the
+the `\tc` command. This will fold all the irrelevant tasks leaving only the
 tasks in the current context visible.
 
-To fold all projects leaving only the headings visible use the \tp command.
-Standard fold commands can be used to open (zo) and close (zc) individual
+To fold all projects leaving only the headings visible use the `\tp` command.
+Standard fold commands can be used to open (`zo`) and close (`zc`) individual
 projects.
 
-To show all projects and tasks use the \ta command. This disables folding so
+To show all projects and tasks use the `\ta` command. This disables folding so
 that the entire file is expanded.
 
 File-type Detection
@@ -123,20 +124,22 @@ Acknowledgements
 
 The initial version of the ToggleDone() function was based on SwitchBox()
 from the VimOutliner Checkboxes script written by Noel Henson (available
-from http://www.vimoutliner.org).
+from <http://www.vimoutliner.org>).
 
 Context folding expression was based on a snippet from Vim Tip 282
-(http://vim.sourceforge.net/tips/tip.php?tip_id=282).
+(<http://vim.sourceforge.net/tips/tip.php?tip_id=282>).
 
-Thanks are due to a number of contributors who have supplied patches to
-improve TaskPaper.vim:
+Thanks are due to a number of contributors who have supplied suggestions
+or patches to improve TaskPaper.vim:
 
+ * Alexander Wodniok
+   - hint to allow this file to be used as a help file
  * Ben Armstron 
-    * various fixes that make the scripts more robust
-    * fix to show only complete tag matches
-    * include '_' in contexts
+   - various fixes that make the scripts more robust
+   - fix to show only complete tag matches
+   - include `_` in contexts
  * Huahai Yang 
-    * fixed handling of indented tasks
+   - fixed handling of indented tasks
 
 Contact
 ========
@@ -145,4 +148,4 @@ The author of these Vim scripts is David O'Callaghan
 <david.ocallaghan@cs.tcd.ie>.
 
 For all information regarding the TaskPaper application itself please visit
-http://hogbaysoftware.com/projects/taskpaper/.
+<http://hogbaysoftware.com/projects/taskpaper/>.
