@@ -56,7 +56,13 @@ function! s:ToggleDone()
 
 endfunction
 
-map <buffer> <LocalLeader>td :call <SID>ToggleDone()<cr>
-map <buffer> <LocalLeader>tc :call <SID>ShowContext()<cr>
-map <buffer> <LocalLeader>ta :call <SID>ShowAll()<cr>
-map <buffer> <LocalLeader>tp :call <SID>FoldAllProjects()<cr>
+" Set up mappings
+noremap <unique> <script> <Plug>ToggleDone       :call <SID>ToggleDone()<CR>
+noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
+noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
+noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+
+map <buffer> <silent> <LocalLeader>td <Plug>ToggleDone
+map <buffer> <silent> <LocalLeader>tc <Plug>ShowContext
+map <buffer> <silent> <LocalLeader>ta <Plug>ShowAll
+map <buffer> <silent> <LocalLeader>tp <Plug>FoldAllProjects
