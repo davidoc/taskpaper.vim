@@ -35,6 +35,8 @@ function! s:ShowContext()
 endfunction
 
 function! s:ShowAll()
+    setlocal foldmethod=syntax
+    %foldopen!
     setlocal nofoldenable
 endfunction  
 
