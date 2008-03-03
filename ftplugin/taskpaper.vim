@@ -26,7 +26,7 @@ function! s:ShowContext()
     if(s:wordUnderCursor =~ "@\k*")
         let @/ = "\\<".s:wordUnderCursor."\\>"
         "adapted from http://vim.sourceforge.net/tips/tip.php?tip_id=282
-        setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum)=~@/)\|\|(getline(v:lnum)=~@/)?0:1
+        setlocal foldexpr=(getline(v:lnum)=~@/)?0:1
         setlocal foldmethod=expr foldlevel=0 foldcolumn=1 foldminlines=0
         setlocal foldenable
     else
