@@ -15,6 +15,11 @@ let loaded_task_paper = 1
 "add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
+"set default folding: by project (syntax), open (up to 99 levels), disabled 
+setlocal foldmethod=syntax
+setlocal foldlevel=99
+setlocal nofoldenable
+
 "show tasks from context under the cursor
 function! s:ShowContext()
     let s:wordUnderCursor = expand("<cword>")
