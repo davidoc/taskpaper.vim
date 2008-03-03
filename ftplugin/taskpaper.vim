@@ -3,8 +3,8 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		http://www.cs.tcd.ie/David.OCallaghan/taskpaper.vim/
-" Version:	1
-" Last Change:  2007 Sep 25
+" Version:	0.3
+" Last Change:  2008-03-03
 
 
 if exists("loaded_task_paper")
