@@ -1,0 +1,11 @@
+Version Control
+----------------
+
+Bazaar (<http://bazaar-vcs.org>) is used for version control. The main
+repository is at <https://www.cs.tcd.ie/David.OCallaghan/taskpaper.vim/>.
+To make a local branch use the following command:
+
+    bzr branch https://www.cs.tcd.ie/David.OCallaghan/taskpaper.vim/
+
+This repository is mirrored on Launchpad (<http://launchpad.net>) at
+<https://code.launchpad.net/~david-ocallaghan/+junk/taskpaper.vim>.
