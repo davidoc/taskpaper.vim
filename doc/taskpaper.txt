@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-3rd March 2008
+23rd May 2008
 
 Introduction
 =============
@@ -50,7 +50,8 @@ Syntax
 =======
 
 The syntax file highlights project headings and task contexts (tags), and
-"greys out" completed tasks. 
+"greys out" completed tasks. The exact style of the displayed file depends
+on your Vim colour scheme. 
 
 A project heading is a piece of text ending in a colon.  Projects can be
 folded using the "syntax" foldmethod.
