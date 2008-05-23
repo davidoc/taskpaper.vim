@@ -17,10 +17,6 @@ else
   command! -nargs=+ HiLink hi def link <args>
 endif
 
-" some style definitions
-hi def tpProject term=bold,underline cterm=bold,underline gui=bold,underline ctermbg=LightGray guibg=LightGray 
-hi def tpDoneTask ctermfg=Gray guifg=Gray
-
 syn case ignore
 
 syn match  taskpaperProject       /^.\+:\s*$/
@@ -36,8 +32,8 @@ syn sync fromstart
 "highlighting for Taskpaper groups
 HiLink taskpaperListItem       Identifier
 HiLink taskpaperContext       Identifier
-HiLink taskpaperProject       tpProject
-HiLink taskpaperDone          tpDoneTask
+HiLink taskpaperProject       Title
+HiLink taskpaperDone          NonText
 
 let b:current_syntax = "taskpaper"
 
