@@ -19,6 +19,7 @@ endif
 
 syn case ignore
 
+syn match  taskpaperComment "^.*$"
 syn match  taskpaperProject       /^.\+:\s*$/
 syn match  taskpaperLineContinue ".$" contained
 syn match  taskpaperListItem  "^\s*[-+]\s\+" 
@@ -34,6 +35,7 @@ HiLink taskpaperListItem       Identifier
 HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
 HiLink taskpaperDone          NonText
+HiLink taskpaperComment       Comment
 
 let b:current_syntax = "taskpaper"
 

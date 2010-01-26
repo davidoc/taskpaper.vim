@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-23rd May 2008
+26th January 2010
 
 Introduction
 =============
@@ -60,6 +60,8 @@ A task is a line beginning with a hyphen '-' and can have zero or more
 context tags.
 
 A context tag has the form "@tag".
+
+Other text is considered as a "note" and is displayed as a Vim comment.
 
 File-type Plugin
 =================
@@ -143,6 +145,8 @@ or patches to improve TaskPaper.vim:
    - fixed handling of indented tasks
  * Steve Audette
    - suggested change to folding
+ * Andreas Kühntopf 
+   - display non-tasks as comments
 
 Contact
 ========
