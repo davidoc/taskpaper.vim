@@ -48,15 +48,20 @@ endfunction
 
 " toggle @done context tag on a task
 function! s:ToggleDone()
-    if (getline(".") =~ '^\s*- ')
-        let isdone = strridx(getline("."),"@done")
-        if (isdone != -1)
-            substitute/ @done//
+
+    let line = getline(".")
+    if (line =~ '^\s*- ')
+        let repl = line
+        if (line =~ '@done')
+            let repl = substitute(line, "@done\(.*\)", "", "g")
             echo "undone!"
         else
-            substitute/$/ @done/
+            let today = strftime("%Y-%m-%d", localtime())
+            let done_str = " @done(" . today . ")"
+            let repl = substitute(line, "$", done_str, "g")
             echo "done!"
         endif
+        call setline(".", repl)
     else 
         echo "not a task."
     endif
