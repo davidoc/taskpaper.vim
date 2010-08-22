@@ -1,0 +1,6 @@
+Release:
+Tasks to be completed before next release
+- Note compatibility with ToDoPaper
+- stylesheets for tags (e.g. "fail" produces red bg)
+- include patch for notes. @done
+- Sync to simpletext.ws
