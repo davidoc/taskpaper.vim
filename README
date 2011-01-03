@@ -1,3 +1,15 @@
+Morgan Sutherland's fork of David O'Callaghan's taskpaper.vim.
+
+Changes
+=============
+
+- syntax changed (watch out for "NotesContext", a custom syntax item)
+- mappings changed so that <leader> is used instead of <localleader>
+- new file added to after/plugin that maps <CR> (C-m) to add a new todo entry
+
+Last edited: 2011-01-02
+
+
 *taskpaper* TaskPaper file-type plugin and syntax file
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>

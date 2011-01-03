@@ -97,8 +97,8 @@ noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
 noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
 
-map <buffer> <silent> <LocalLeader>td <Plug>ToggleDone
-map <buffer> <silent> <LocalLeader>tx <Plug>ToggleCancelled
-map <buffer> <silent> <LocalLeader>tc <Plug>ShowContext
-map <buffer> <silent> <LocalLeader>ta <Plug>ShowAll
-map <buffer> <silent> <LocalLeader>tp <Plug>FoldAllProjects
+map <buffer> <silent> <Leader>td <Plug>ToggleDone
+map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
+map <buffer> <silent> <Leader>tc <Plug>ShowContext
+map <buffer> <silent> <Leader>ta <Plug>ShowAll
+map <buffer> <silent> <Leader>tp <Plug>FoldAllProjects

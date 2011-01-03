@@ -35,7 +35,7 @@ HiLink taskpaperListItem      Identifier
 HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
 HiLink taskpaperDone          NonText
-HiLink taskpaperCancelled      NonText
+HiLink taskpaperCancelled     NonText
 HiLink taskpaperComment       Comment
 
 let b:current_syntax = "taskpaper"
