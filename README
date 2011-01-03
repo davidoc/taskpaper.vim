@@ -1,7 +1,6 @@
 Morgan Sutherland's fork of David O'Callaghan's taskpaper.vim.
 
-Changes
-=============
+Changes:
 
 - syntax changed (watch out for "NotesContext", a custom syntax item)
 - mappings changed so that <leader> is used instead of <localleader>
@@ -10,7 +9,7 @@ Changes
 Last edited: 2011-01-02
 
 
-*taskpaper* TaskPaper file-type plugin and syntax file
+TaskPaper file-type plugin and syntax file
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
