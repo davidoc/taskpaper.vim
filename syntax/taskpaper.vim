@@ -25,16 +25,18 @@ syn match  taskpaperLineContinue ".$" contained
 syn match  taskpaperListItem  "^\s*[-+]\s\+" 
 syn match  taskpaperContext  "@[A-Za-z0-9_]\+"
 syn match  taskpaperDone "^\s*[-+]\s\+.*@[Dd]one.*$"
+syn match  taskpaperCanceled "^\s*[-+]\s\+.*@[Cc]anceled.*$"
 
 syn region taskpaperProjectFold start=/^.\+:\s*$/ end=/^\s*$/ transparent fold
 
 syn sync fromstart
 
 "highlighting for Taskpaper groups
-HiLink taskpaperListItem       Identifier
+HiLink taskpaperListItem      Identifier
 HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
 HiLink taskpaperDone          NonText
+HiLink taskpaperCanceled      NonText
 HiLink taskpaperComment       Comment
 
 let b:current_syntax = "taskpaper"
