@@ -12,7 +12,7 @@ if exists("loaded_task_paper")
 endif
 let loaded_task_paper = 1
 
-# Define a default date format
+" Define a default date format
 if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
 
 "add '@' to keyword character set so that we can complete contexts as keywords
