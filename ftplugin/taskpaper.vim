@@ -12,6 +12,9 @@ if exists("loaded_task_paper")
 endif
 let loaded_task_paper = 1
 
+# Define a default date format
+if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
+
 "add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
@@ -56,7 +59,7 @@ function! s:ToggleDone()
             let repl = substitute(line, "@done\(.*\)", "", "g")
             echo "undone!"
         else
-            let today = strftime("%Y-%m-%d", localtime())
+            let today = strftime(g:task_paper_date_format, localtime())
             let done_str = " @done(" . today . ")"
             let repl = substitute(line, "$", done_str, "g")
             echo "done!"
