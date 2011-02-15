@@ -162,6 +162,8 @@ or patches to improve TaskPaper.vim:
    - added ToggleCancelled
  * Robert James Kaes (https://github.com/rjkaes)
    - added task_paper_date_format
+ * Adriano Castro (https://github.com/adrianocastro)
+   - use tabs not spaces (noexpandtab)
 
 Contact
 ========

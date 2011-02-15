@@ -108,7 +108,6 @@ define the `task_paper_date_format` variable. The format matches your system's
 For example, to include the date and time in ISO8601 format:
 
     let g:task_paper_date_format = "%Y-%m-%dT%H:%M:%S%z"
-
 File-type Detection
 ====================
 
@@ -163,6 +162,8 @@ or patches to improve TaskPaper.vim:
    - added ToggleCancelled
  * Robert James Kaes (https://github.com/rjkaes)
    - added task_paper_date_format
+ * Adriano Castro (https://github.com/adrianocastro)
+   - use tabs not spaces (noexpandtab)
 
 Contact
 ========
