@@ -3,8 +3,7 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		http://www.cs.tcd.ie/David.OCallaghan/taskpaper.vim/
-" Version:	0.3
-" Last Change:  2008-03-03
+" Last Change:  2011-02-15
 
 
 if exists("loaded_task_paper")
@@ -81,7 +80,7 @@ function! s:ToggleCancelled()
             let repl = substitute(line, "@cancelled\(.*\)", "", "g")
             echo "uncancelled!"
         else
-            let today = strftime("%Y-%m-%d", localtime())
+            let today = strftime(g:task_paper_date_format, localtime())
             let cancelled_str = " @cancelled(" . today . ")"
             let repl = substitute(line, "$", cancelled_str, "g")
             echo "cancelled!"
