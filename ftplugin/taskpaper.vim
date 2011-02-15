@@ -68,20 +68,20 @@ function! s:ToggleDone()
 
 endfunction
 
-" toggle @canceled context tag on a task
-function! s:ToggleCanceled()
+" toggle @cancelled context tag on a task
+function! s:ToggleCancelled()
 
     let line = getline(".")
     if (line =~ '^\s*- ')
         let repl = line
-        if (line =~ '@canceled')
-            let repl = substitute(line, "@canceled\(.*\)", "", "g")
-            echo "uncanceled!"
+        if (line =~ '@cancelled')
+            let repl = substitute(line, "@cancelled\(.*\)", "", "g")
+            echo "uncancelled!"
         else
             let today = strftime("%Y-%m-%d", localtime())
-            let canceled_str = " @canceled(" . today . ")"
-            let repl = substitute(line, "$", canceled_str, "g")
-            echo "canceled!"
+            let cancelled_str = " @cancelled(" . today . ")"
+            let repl = substitute(line, "$", cancelled_str, "g")
+            echo "cancelled!"
         endif
         call setline(".", repl)
     else 
@@ -92,13 +92,13 @@ endfunction
 
 " Set up mappings
 noremap <unique> <script> <Plug>ToggleDone       :call <SID>ToggleDone()<CR>
-noremap <unique> <script> <Plug>ToggleCanceled   :call <SID>ToggleCanceled()<CR>
+noremap <unique> <script> <Plug>ToggleCancelled   :call <SID>ToggleCancelled()<CR>
 noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
 noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
 
 map <buffer> <silent> <LocalLeader>td <Plug>ToggleDone
-map <buffer> <silent> <LocalLeader>tx <Plug>ToggleCanceled
+map <buffer> <silent> <LocalLeader>tx <Plug>ToggleCancelled
 map <buffer> <silent> <LocalLeader>tc <Plug>ShowContext
 map <buffer> <silent> <LocalLeader>ta <Plug>ShowAll
 map <buffer> <silent> <LocalLeader>tp <Plug>FoldAllProjects
