@@ -1,10 +1,8 @@
 " plugin to handle the TaskPaper to-do list format
-" http://hogbaysoftware.com/projects/taskpaper
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
-" URL:		http://www.cs.tcd.ie/David.OCallaghan/taskpaper.vim/
+" URL:		https://github.com/davidoc/taskpaper.vim
 " Last Change:  2011-02-15
-
 
 if exists("loaded_task_paper")
     finish
