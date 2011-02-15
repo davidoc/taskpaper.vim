@@ -1,15 +1,4 @@
-Morgan Sutherland's fork of David O'Callaghan's taskpaper.vim.
-
-Changes:
-
-- syntax changed (watch out for "NotesContext", a custom syntax item)
-- mappings changed so that <leader> is used instead of <localleader>
-- new file added to after/plugin that maps <CR> (C-m) to add a new todo entry
-
-Last edited: 2011-01-02
-
-
-TaskPaper file-type plugin and syntax file
+*taskpaper* TaskPaper file-type plugin and syntax file
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
@@ -91,7 +80,7 @@ The plugin defines some new mappings:
     \tp     Fold all projects
     \ta     Show all projects and tasks
 
-Note: if `<LocalLeader>` has been changed (e.g. `:let maplocalleader=",,"`)
+Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
 
 Marking a task as done will add the "@done" context tag to the end of the
@@ -175,6 +164,9 @@ or patches to improve TaskPaper.vim:
    - added task_paper_date_format
  * Adriano Castro (https://github.com/adrianocastro)
    - use tabs not spaces (noexpandtab)
+ * Morgan Sutherland (https://github.com/msutherl)
+   - Use <Leader> rather than <LocalLeader>
+   - Start new task after <CR>
 
 Contact
 ========
