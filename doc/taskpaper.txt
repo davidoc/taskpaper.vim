@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-26th January 2010
+15th February 2011
 
 Introduction
 =============
@@ -75,6 +75,7 @@ commands (e.g. Ctrl-X Ctrl-N).
 The plugin defines some new mappings: 
 
     \td     Mark task as done
+    \tx     Mark task as cancelled
     \tc     Show all tasks with context under cursor
     \tp     Fold all projects
     \ta     Show all projects and tasks
@@ -117,7 +118,7 @@ type for all files with the ".taskpaper" extension.
 Licence
 ========
 
-Copyright (C) 2007--2008 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
+Copyright (C) 2007--2011 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -158,6 +159,10 @@ or patches to improve TaskPaper.vim:
    - suggested change to folding
  * Andreas Kühntopf 
    - display non-tasks as comments
+ * Julien Blanchard (https://github.com/julienXX)
+   - added ToggleCancelled
+ * Robert James Kaes (https://github.com/rjkaes)
+   - added task_paper_date_format
 
 Contact
 ========

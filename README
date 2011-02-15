@@ -98,6 +98,16 @@ projects.
 To show all projects and tasks use the `\ta` command. This disables folding so
 that the entire file is expanded.
 
+Configuration
+==============
+
+To change the default date format string used when marking a task complete,
+define the `task_paper_date_format` variable. The format matches your system's
+`strftime()` function.
+
+For example, to include the date and time in ISO8601 format:
+
+    let g:task_paper_date_format = "%Y-%m-%dT%H:%M:%S%z"
 File-type Detection
 ====================
 
@@ -149,7 +159,9 @@ or patches to improve TaskPaper.vim:
  * Andreas Kühntopf 
    - display non-tasks as comments
  * Julien Blanchard (https://github.com/julienXX)
-   - ToggleCancelled
+   - added ToggleCancelled
+ * Robert James Kaes (https://github.com/rjkaes)
+   - added task_paper_date_format
 
 Contact
 ========
