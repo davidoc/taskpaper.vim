@@ -16,7 +16,7 @@ if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" |
 setlocal iskeyword+=@-@
 
 "set default folding: by project (syntax), open (up to 99 levels), disabled 
-setlocal foldmethod=syntax
+setlocal foldmethod=indent
 setlocal foldlevel=99
 setlocal nofoldenable
 
@@ -32,6 +32,27 @@ function! s:ShowContext()
     else
         echo "'" s:wordUnderCursor "' is not a context."    
     endif
+endfunction
+
+function! s:FocusProject()
+	let s:currentLine = getline('.')
+	if(s:currentLine =~ ":$")
+		setlocal foldenable
+		setlocal foldmethod=manual
+
+		exec "normal zE"
+		let s:line = line(".")
+		let s:prevLine = s:line-1
+		let s:tabs = indent(".")/&ts
+		execute "0,".s:prevLine."fold"
+		let s:nextProject = search("^\t\\{".s:tabs."}\\S*:")
+
+		execute s:nextProject.",".line("$")."fold"
+		execute s:line
+	else
+		echo "'" s:currentLine "' is not a project."
+	endif
+	return
 endfunction
 
 function! s:ShowAll()
@@ -96,9 +117,11 @@ noremap <unique> <script> <Plug>ToggleCancelled   :call <SID>ToggleCancelled()<C
 noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
 noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+noremap <unique> <script> <Plug>FocusProject  :call <SID>FocusProject()<CR>
 
 map <buffer> <silent> <Leader>td <Plug>ToggleDone
 map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
 map <buffer> <silent> <Leader>tc <Plug>ShowContext
 map <buffer> <silent> <Leader>ta <Plug>ShowAll
 map <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+map <buffer> <silent> <Leader>tf <Plug>FocusProject
