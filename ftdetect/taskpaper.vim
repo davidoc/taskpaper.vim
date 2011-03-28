@@ -2,9 +2,9 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2011-02-15
+" Last Change:  2011-03-28
 "
 augroup taskpaper
      au! BufRead,BufNewFile *.taskpaper   setfiletype taskpaper
-     au FileType taskpaper setlocal noexpandtab shiftwidth=4 tabstop=4
+     au FileType taskpaper setlocal noexpandtab
 augroup END
