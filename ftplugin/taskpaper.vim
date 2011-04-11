@@ -20,6 +20,9 @@ setlocal foldmethod=syntax
 setlocal foldlevel=99
 setlocal nofoldenable
 
+" Disable autoindent to prevent the <cr> mappings from adding sub-tasks
+setlocal noautoindent
+
 "show tasks from context under the cursor
 function! s:ShowContext()
     let s:wordUnderCursor = expand("<cword>")
