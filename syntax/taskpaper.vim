@@ -23,7 +23,7 @@ syn match  taskpaperProject      "^\s*[^\-].\+:"
 syn match  taskpaperLineContinue ".$" contained
 syn match  taskpaperListItem     "^\s*[-+]\s\+"
 syn match  taskpaperContext      "@[A-Za-z0-9_]\+"
-syn match  taskpaperDone         ".*@[Dd]one\%(([0-9\-]\+)\)\=$"
+syn match  taskpaperDone         ".*@[Dd]one\%(([0-9\-]\+)\)\=.*$"
 syn match  taskpaperCancelled    "^\s*[-+]\s\+.*@[Cc]ancelled.*$"
 
 syn region taskpaperProjectFold start=/^\z(\s*\)[^-].\+:/ end=/^\ze\S\|^\zs$/ transparent fold contains=ALL
