@@ -72,7 +72,7 @@ function! s:ToggleDone()
     if (line =~ '^\s*- ') || (line =~ '^\s*[^\-].\+:')
         let repl = line
         if (line =~ '@done')
-            let repl = substitute(line, " @done\(.*\)\=$", "\1", "g")
+            let repl = substitute(line, ' @done\%((.\{-})\)\=\(.*\)\=$', '\1', 'g')
             echomsg "undone!"
         else
             let today = strftime(g:task_paper_date_format, localtime())
