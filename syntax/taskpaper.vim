@@ -2,7 +2,7 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2011-09-28 by Matt Sacks <matt.s.sacks@gmail.com>
+" Last Change:  2011-09-28
 
 if version < 600
   syntax clear

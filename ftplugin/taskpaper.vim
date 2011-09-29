@@ -2,7 +2,7 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2011-09-28 by Matt Sacks <matt.s.sacks@gmail.com>
+" Last Change:  2011-09-28
 
 if exists("b:loaded_task_paper")
     finish
@@ -44,6 +44,8 @@ function! s:FoldAllProjects()
     setlocal foldmethod=syntax
     setlocal foldenable
     %foldclose! 
+endfunction
+
 " show project from context under cursor
 function! s:ShowProject()
     let project  = getline('.')
@@ -61,8 +63,6 @@ function! s:ShowProject()
     else
         echomsg project.' is not a project'
     endif
-endfunction
-
 endfunction
 
 " toggle @done context tag on a task
@@ -113,7 +113,7 @@ function! s:SubTag(tag, line)
   let line = getline(a:line)
   if line =~ '^\s*- '
     if line =~ a:tag
-      let repl = substitute(line, ' @'.a:tag.'\(.*\)', '', 'g')
+      let repl = substitute(line, ' @'.a:tag.'\(.*\)$', '\1', 'g')
     else
       let repl = substitute(line, '$', ' @'.a:tag, 'g')
     endif
@@ -123,13 +123,9 @@ endfunction
 
 " custom toggle @ tag
 function! s:ToggleTag(tag, line1, line2)
-  if a:line1 != a:line2
-    for l in range(a:line1, a:line2)
-      call s:SubTag(a:tag, l)
-    endfor
-  else
-    call s:SubTag(a:tag, line('.'))
-  endif
+  for l in range(a:line1, a:line2)
+    call s:SubTag(a:tag, l)
+  endfor
 endfunction
 command! -nargs=1 -range -buffer Tag
       \ :exec 'let c = getpos(".")'
