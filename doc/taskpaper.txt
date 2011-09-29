@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-15th February 2011
+28th September 2011
 
 Introduction
 =============
@@ -79,6 +79,7 @@ The plugin defines some new mappings:
     \tc     Show all tasks with context under cursor
     \tp     Fold all projects
     \ta     Show all projects and tasks
+    \tt     Toggle add/removing a context from a task
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
@@ -167,6 +168,12 @@ or patches to improve TaskPaper.vim:
  * Morgan Sutherland (https://github.com/msutherl)
    - Use <Leader> rather than <LocalLeader>
    - Start new task after <CR>
+ * Matt Sacks (https://github.com/mattsa)
+   - Optional (date) syntax for @done tasks
+   - Add Tag command for add/removing tag
+   - Fix lagging space after removing a tag
+   - Better syntax 
+
 
 Contact
 ========
