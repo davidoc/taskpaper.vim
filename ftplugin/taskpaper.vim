@@ -2,12 +2,12 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2011-02-15
+" Last Change:  2011-09-28 by Matt Sacks <matt.s.sacks@gmail.com>
 
-if exists("loaded_task_paper")
+if exists("b:loaded_task_paper")
     finish
 endif
-let loaded_task_paper = 1
+let b:loaded_task_paper = 1
 
 " Define a default date format
 if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
