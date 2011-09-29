@@ -69,20 +69,20 @@ endfunction
 function! s:ToggleDone()
 
     let line = getline(".")
-    if (line =~ '^\s*- ')
+    if (line =~ '^\s*- ') || (line =~ '^\s*[^\-].\+:')
         let repl = line
         if (line =~ '@done')
-            let repl = substitute(line, "@done\(.*\)", "", "g")
-            echo "undone!"
+            let repl = substitute(line, " @done\(.*\)", "", "g")
+            echomsg "undone!"
         else
             let today = strftime(g:task_paper_date_format, localtime())
             let done_str = " @done(" . today . ")"
             let repl = substitute(line, "$", done_str, "g")
-            echo "done!"
+            echomsg "done!"
         endif
         call setline(".", repl)
     else 
-        echo "not a task."
+        echomsg "not a task."
     endif
 
 endfunction
