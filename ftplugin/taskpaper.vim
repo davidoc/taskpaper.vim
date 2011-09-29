@@ -72,7 +72,7 @@ function! s:ToggleDone()
     if (line =~ '^\s*- ') || (line =~ '^\s*[^\-].\+:')
         let repl = line
         if (line =~ '@done')
-            let repl = substitute(line, " @done\(.*\)", "", "g")
+            let repl = substitute(line, " @done\(.*\)\=$", "\1", "g")
             echomsg "undone!"
         else
             let today = strftime(g:task_paper_date_format, localtime())
@@ -128,9 +128,9 @@ function! s:ToggleTag(tag, line1, line2)
   endfor
 endfunction
 command! -nargs=1 -range -buffer Tag
-      \ :exec 'let c = getpos(".")'
+      \ :exec 'let s:c = getpos(".")'
       \| call s:ToggleTag(<f-args>, <line1>, <line2>)
-      \| call setpos('.', c)
+      \| call setpos('.', s:c)
 
 " Set up mappings
 noremap <unique> <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
