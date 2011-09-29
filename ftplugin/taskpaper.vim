@@ -106,8 +106,35 @@ function! s:ToggleCancelled()
     else 
         echo "not a task."
     endif
-
 endfunction
+
+" substitute a tag for a line number
+function! s:SubTag(tag, line)
+  let line = getline(a:line)
+  if line =~ '^\s*- '
+    if line =~ a:tag
+      let repl = substitute(line, ' @'.a:tag.'\(.*\)', '', 'g')
+    else
+      let repl = substitute(line, '$', ' @'.a:tag, 'g')
+    endif
+    call setline(a:line, repl)
+  endif
+endfunction
+
+" custom toggle @ tag
+function! s:ToggleTag(tag, line1, line2)
+  if a:line1 != a:line2
+    for l in range(a:line1, a:line2)
+      call s:SubTag(a:tag, l)
+    endfor
+  else
+    call s:SubTag(a:tag, line('.'))
+  endif
+endfunction
+command! -nargs=1 -range -buffer Tag
+      \ :exec 'let c = getpos(".")'
+      \| call s:ToggleTag(<f-args>, <line1>, <line2>)
+      \| call setpos('.', c)
 
 " Set up mappings
 noremap <unique> <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
@@ -121,3 +148,6 @@ map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
 map <buffer> <silent> <Leader>tc <Plug>ShowContext
 map <buffer> <silent> <Leader>ta <Plug>ShowAll
 map <buffer> <silent> <Leader>tp <Plug>ShowProject
+
+nno <buffer> <silent> <Leader>tt :Tag<Space>
+xno <buffer> <silent> <Leader>tt :Tag<Space>
