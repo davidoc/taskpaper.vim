@@ -44,6 +44,25 @@ function! s:FoldAllProjects()
     setlocal foldmethod=syntax
     setlocal foldenable
     %foldclose! 
+" show project from context under cursor
+function! s:ShowProject()
+    let project  = getline('.')
+    let position = getpos('.')
+    let synlist  = []
+    for id in synstack(position[1], position[2])
+        call add(synlist, synIDattr(id, "name"))
+    endfor
+    if project =~ ':$' ||
+                \ index(synlist, 'taskpaperProjectFold') != -1
+        setl foldenable
+        setl foldmethod=syntax
+        %foldclose!
+        exec 'normal zO'
+    else
+        echomsg project.' is not a project'
+    endif
+endfunction
+
 endfunction
 
 " toggle @done context tag on a task
@@ -91,14 +110,14 @@ function! s:ToggleCancelled()
 endfunction
 
 " Set up mappings
-noremap <unique> <script> <Plug>ToggleDone       :call <SID>ToggleDone()<CR>
-noremap <unique> <script> <Plug>ToggleCancelled   :call <SID>ToggleCancelled()<CR>
-noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
-noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
-noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+noremap <unique> <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
+noremap <unique> <script> <Plug>ToggleCancelled :call <SID>ToggleCancelled()<CR>
+noremap <unique> <script> <Plug>ShowContext     :call <SID>ShowContext()<CR>
+noremap <unique> <script> <Plug>ShowAll         :call <SID>ShowAll()<CR>
+noremap <unique> <script> <Plug>ShowProject     :call <SID>ShowProject()<CR>
 
 map <buffer> <silent> <Leader>td <Plug>ToggleDone
 map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
 map <buffer> <silent> <Leader>tc <Plug>ShowContext
 map <buffer> <silent> <Leader>ta <Plug>ShowAll
-map <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+map <buffer> <silent> <Leader>tp <Plug>ShowProject
