@@ -167,8 +167,8 @@ function! s:ToggleActive()
 		let this_line = getpos(".")[1]
 		let this_column = getpos(".")[2]
 		if (line =~ '@active')
-			let repl = substitute(repl, "\s*@active\(.*\)", "", "g")
-			let repl = substitute(repl, "\s*@active", "", "g")
+			let repl = substitute(repl, "\\s*@active\(.*\)", "", "g")
+			let repl = substitute(repl, "\\s*@active", "", "g")
 			echo "Not active!"
 		else
 			"Delete all @active tags in the current scope
@@ -190,16 +190,20 @@ function! s:ToggleActive()
 				while active_pos != 0
 					let active_line = getline(active_pos)
 					"Replace regardless of the tag having a parameter or not
-					let active_line = substitute(active_line, "\s*@active\(.*\)", "", "g")
-					let active_line = substitute(active_line, "\s*@active", "", "g")
+					let active_line = substitute(active_line, "\\s*@active\(.*\)", "", "g")
+					let active_line = substitute(active_line, "\\s*@active", "", "g")
 					call setline(active_pos, active_line)
 					let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$", flags, searchEnd)
 				endwhile
 			endif
 
 			"return to the line where we were
-			let active_str = " @active"
-			let repl = substitute(line, "\s*$", active_str, "g")
+			let active_str = "@active"
+			if !(line =~ "\s$")
+				let active_str = ' ' . active_str "add a space if there is none at the end of the line
+			endif
+
+			let repl = substitute(line, "\\s*$", active_str, "g")
 			call cursor(this_line, this_column)
 			echo "Active!"
 		endif
