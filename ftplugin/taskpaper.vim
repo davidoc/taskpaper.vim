@@ -10,37 +10,6 @@ if exists("loaded_task_paper")
 endif
 let loaded_task_paper = 1
 
-"Altered by Filipe Silva @ 21/10/2011
-"Em
-"Variables to control the scope of the @active tag removal 
-"when switching active tasks
-"
-"Possible removal scopes:
-" "FILE": When setting a task as active, remove all other active tags
-"         from the whole file (allows only 1 active tag) 
-"         (This is the default value)
-" "PROJECT": When setting a task as active, remove other active tags
-"            from the current project only (allows 1 active tag per project)
-" "NOTHING": When setting a task as active, do not remove other active tags
-"
-if exists("b:task_paper_active_rag_removal_scope")
-	let s:task_paper_active_rag_removal_scope=b:task_paper_active_rag_removal_scope
-else
-	if exists("t:task_paper_active_rag_removal_scope")
-		let s:task_paper_active_rag_removal_scope=t:task_paper_active_rag_removal_scope
-	else
-		if exists("w:task_paper_active_rag_removal_scope")
-			let s:task_paper_active_rag_removal_scope=w:task_paper_active_rag_removal_scope
-		else
-			if exists("g:task_paper_active_rag_removal_scope")
-				let s:task_paper_active_rag_removal_scope=g:task_paper_active_rag_removal_scope
-			else
-				let s:task_paper_active_rag_removal_scope="FILE"
-			endif
-		endif
-	endif
-endif
-
 " Define a default date format
 if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
 
@@ -123,13 +92,75 @@ function! s:ToggleCancelled()
 endfunction
 
 "Altered by Filipe Silva <d4rchangel@gmail.com>
+"Obtains the current project's boundaries.
+"To be used in the PROJECT scope for deleting
+"other active tags
+function! s:GetTaskpaperProjectBoundaries()
+	"save the current cursor position
+	let currentline = getpos('.')[1]
+	let currentcolumn = getpos('.')[2]
+
+	let projregex = '^.\+:\s*$'
+
+	let projstart = search(projregex, 'bWc') "Gets the line with the beginning of the current project (possibly the current line)
+	while projstart != 0 && (getline(projstart) =~ '^\s*- ') "Ensure the match is not of a task ending in ':'
+		let projstart = search(projregex, 'bWc')
+	endwhile
+
+	if projstart == 0
+		let projstart = 1 "No current project, start at the beginning of the file
+	endif
+
+
+	let projend = search(projregex, 'W') "Gets the line with the beginning of the next project 
+
+	while projend != 0 && (getline(projend) =~ '^\s*- ') "Ensure the match is not of a task ending in ':'
+		let projend = search(projregex, 'W')
+	endwhile
+
+	if projend == 0
+		let projend = line('$') "No next project, finish at the end of the file
+	else
+		let projend = projend-1 "Set one line back, meaning the end of the current project instead of the beginning of the next
+	endif
+
+	"Return the cursor to the original position
+	call cursor(currentline, currentcolumn)
+
+	return [projstart, projend]
+endfunction
+
+"Altered by Filipe Silva <d4rchangel@gmail.com>
 "Toggle @active context in a task
 "Ensures there is only one active task at any given time
-
 function! s:ToggleActive()
 
-	"TODO: Function to get the boundaries of a project (if not already existing)
-	"TODO: Limit the tag deletion to the scope of a project
+	"Possible removal scopes:
+	" "FILE": When setting a task as active, remove all other active tags
+	"         from the whole file (allows only 1 active tag) 
+	"         (This is the default value)
+	" "PROJECT": When setting a task as active, remove other active tags
+	"            from the current project only (allows 1 active tag per project)
+	" "NOTHING": When setting a task as active, do not remove other active tags
+	"
+	if exists("b:task_paper_active_rag_removal_scope")
+		let s:task_paper_active_rag_removal_scope=b:task_paper_active_rag_removal_scope
+	else
+		if exists("t:task_paper_active_rag_removal_scope")
+			let s:task_paper_active_rag_removal_scope=t:task_paper_active_rag_removal_scope
+		else
+			if exists("w:task_paper_active_rag_removal_scope")
+				let s:task_paper_active_rag_removal_scope=w:task_paper_active_rag_removal_scope
+			else
+				if exists("g:task_paper_active_rag_removal_scope")
+					let s:task_paper_active_rag_removal_scope=g:task_paper_active_rag_removal_scope
+				else
+					let s:task_paper_active_rag_removal_scope="FILE"
+				endif
+			endif
+		endif
+	endif
+
 	let line = getline(".")
 	if (line =~ '^\s*- ')
 		let repl = line
@@ -142,16 +173,27 @@ function! s:ToggleActive()
 		else
 			"Delete all @active tags in the current scope
 			if s:task_paper_active_rag_removal_scope != "NOTHING"
-				"if s:task_paper_active_rag_removal_scope == "PROJECT"
+				let searchBegin = line('^') "start at the first line
+				let searchEnd = line('$')   "finish at the last line
 
-				let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$")
+				if s:task_paper_active_rag_removal_scope == "PROJECT"
+					let projBounds = s:GetTaskpaperProjectBoundaries()
+					let searchBegin = projBounds[0]
+					let searchEnd = projBounds[1]
+				endif
+
+				"Set beginning of the search
+				call cursor(searchBegin, 0)
+				let flags = 'c'
+
+				let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$", flags, searchEnd)
 				while active_pos != 0
 					let active_line = getline(active_pos)
 					"Replace regardless of the tag having a parameter or not
 					let active_line = substitute(active_line, "@active\(.*\)", "", "g")
 					let active_line = substitute(active_line, "@active", "", "g")
 					call setline(active_pos, active_line)
-					let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$")
+					let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$", flags, searchEnd)
 				endwhile
 			endif
 
