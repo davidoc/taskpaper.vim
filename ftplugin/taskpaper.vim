@@ -51,7 +51,7 @@ endfunction
 function! s:ToggleDone()
 
 	let line = getline(".")
-	if (line =~ '^\s*- ')
+	if (line =~ '^\s*-\s')
 		let repl = line
 		if (line =~ '@done')
 			let repl = substitute(line, "@done\(.*\)", "", "g")
@@ -73,7 +73,7 @@ endfunction
 function! s:ToggleCancelled()
 
 	let line = getline(".")
-	if (line =~ '^\s*- ')
+	if (line =~ '^\s*-\s')
 		let repl = line
 		if (line =~ '@cancelled')
 			let repl = substitute(line, "@cancelled\(.*\)", "", "g")
@@ -103,7 +103,7 @@ function! s:GetTaskpaperProjectBoundaries()
 	let projregex = '^.\+:\s*$'
 
 	let projstart = search(projregex, 'bWc') "Gets the line with the beginning of the current project (possibly the current line)
-	while projstart != 0 && (getline(projstart) =~ '^\s*- ') "Ensure the match is not of a task ending in ':'
+	while projstart != 0 && (getline(projstart) =~ '^\s*-\s') "Ensure the match is not of a task ending in ':'
 		let projstart = search(projregex, 'bWc')
 	endwhile
 
@@ -114,7 +114,7 @@ function! s:GetTaskpaperProjectBoundaries()
 
 	let projend = search(projregex, 'W') "Gets the line with the beginning of the next project 
 
-	while projend != 0 && (getline(projend) =~ '^\s*- ') "Ensure the match is not of a task ending in ':'
+	while projend != 0 && (getline(projend) =~ '^\s*-\s') "Ensure the match is not of a task ending in ':'
 		let projend = search(projregex, 'W')
 	endwhile
 
@@ -143,55 +143,55 @@ function! s:ToggleActive()
 	"            from the current project only (allows 1 active tag per project)
 	" "NOTHING": When setting a task as active, do not remove other active tags
 	"
-	if exists("b:task_paper_active_rag_removal_scope")
-		let s:task_paper_active_rag_removal_scope=b:task_paper_active_rag_removal_scope
+	if exists("b:task_paper_active_tag_removal_scope")
+		let s:task_paper_active_tag_removal_scope=b:task_paper_active_tag_removal_scope
 	else
-		if exists("t:task_paper_active_rag_removal_scope")
-			let s:task_paper_active_rag_removal_scope=t:task_paper_active_rag_removal_scope
+		if exists("t:task_paper_active_tag_removal_scope")
+			let s:task_paper_active_tag_removal_scope=t:task_paper_active_tag_removal_scope
 		else
-			if exists("w:task_paper_active_rag_removal_scope")
-				let s:task_paper_active_rag_removal_scope=w:task_paper_active_rag_removal_scope
+			if exists("w:task_paper_active_tag_removal_scope")
+				let s:task_paper_active_tag_removal_scope=w:task_paper_active_tag_removal_scope
 			else
-				if exists("g:task_paper_active_rag_removal_scope")
-					let s:task_paper_active_rag_removal_scope=g:task_paper_active_rag_removal_scope
+				if exists("g:task_paper_active_tag_removal_scope")
+					let s:task_paper_active_tag_removal_scope=g:task_paper_active_tag_removal_scope
 				else
-					let s:task_paper_active_rag_removal_scope="FILE"
+					let s:task_paper_active_tag_removal_scope="FILE"
 				endif
 			endif
 		endif
 	endif
 
 	let line = getline(".")
-	if (line =~ '^\s*- ')
+	if (line =~ '^\s*-\s')
 		let repl = line
 		let this_line = getpos(".")[1]
 		let this_column = getpos(".")[2]
 		if (line =~ '@active')
-			let repl = substitute(repl, "@active\(.*\)", "", "g")
-			let repl = substitute(repl, "@active", "", "g")
+			let repl = substitute(repl, "\s*@active\(.*\)", "", "g")
+			let repl = substitute(repl, "\s*@active", "", "g")
 			echo "Not active!"
 		else
 			"Delete all @active tags in the current scope
-			if s:task_paper_active_rag_removal_scope != "NOTHING"
-				let searchBegin = line('^') "start at the first line
+			if s:task_paper_active_tag_removal_scope != "NOTHING"
+				let searchBegin = 1 "start at the first line
 				let searchEnd = line('$')   "finish at the last line
 
-				if s:task_paper_active_rag_removal_scope == "PROJECT"
+				if s:task_paper_active_tag_removal_scope == "PROJECT"
 					let projBounds = s:GetTaskpaperProjectBoundaries()
 					let searchBegin = projBounds[0]
 					let searchEnd = projBounds[1]
 				endif
 
 				"Set beginning of the search
-				call cursor(searchBegin, 0)
+				call cursor(searchBegin, 1)
 				let flags = 'c'
 
 				let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$", flags, searchEnd)
 				while active_pos != 0
 					let active_line = getline(active_pos)
 					"Replace regardless of the tag having a parameter or not
-					let active_line = substitute(active_line, "@active\(.*\)", "", "g")
-					let active_line = substitute(active_line, "@active", "", "g")
+					let active_line = substitute(active_line, "\s*@active\(.*\)", "", "g")
+					let active_line = substitute(active_line, "\s*@active", "", "g")
 					call setline(active_pos, active_line)
 					let active_pos = search("^\\s*-\\s.*\@[Aa]ctive.*$", flags, searchEnd)
 				endwhile
@@ -199,7 +199,7 @@ function! s:ToggleActive()
 
 			"return to the line where we were
 			let active_str = " @active"
-			let repl = substitute(line, "$", active_str, "g")
+			let repl = substitute(line, "\s*$", active_str, "g")
 			call cursor(this_line, this_column)
 			echo "Active!"
 		endif
