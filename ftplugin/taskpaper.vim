@@ -34,6 +34,27 @@ function! s:ShowContext()
     endif
 endfunction
 
+function! s:FocusProject()
+	let s:currentLine = getline('.')
+	if(s:currentLine =~ ":$")
+		setlocal foldenable
+		setlocal foldmethod=manual
+
+		exec "normal zE"
+		let s:line = line(".")
+		let s:prevLine = s:line-1
+		let s:tabs = indent(".")/&ts
+		execute "0,".s:prevLine."fold"
+		let s:nextProject = search("^\t\\{".s:tabs."}\\S*:")
+
+		execute s:nextProject.",".line("$")."fold"
+		execute s:line
+	else
+		echo "'" s:currentLine "' is not a project."
+	endif
+	return
+endfunction
+
 function! s:ShowAll()
     setlocal foldmethod=syntax
     %foldopen!
