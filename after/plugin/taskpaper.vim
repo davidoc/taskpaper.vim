@@ -6,5 +6,8 @@
 "
 
 " map carriage return to create new todo entry
-autocmd filetype taskpaper :nnoremap <buffer> <C-m> o<tab>- 
-autocmd filetype taskpaper :inoremap <buffer> <C-m> <ESC>o<tab>- 
+autocmd filetype taskpaper :nnoremap <buffer> <C-m> o- 
+autocmd filetype taskpaper :inoremap <buffer> <C-m> <ESC>o- 
+autocmd filetype taskpaper :nnoremap <buffer> o o- 
+autocmd filetype taskpaper :nnoremap <buffer> O O- 
+

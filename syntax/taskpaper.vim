@@ -28,15 +28,33 @@ syn match  taskpaperCancelled "^\s*[-+]\s\+.*@[Cc]ancelled.*$"
 
 syn region taskpaperProjectFold start=/^.\+:\s*$/ end=/^\s*$/ transparent fold
 
+
+syntax match taskpaperPri1 "@pri(1)"
+syntax match taskpaperPri2 "@pri(2)"
+syntax match taskpaperPri3 "@pri(3)"
+syntax match taskpaperPri4 "@pri(4)"
+syntax match taskpaperPri5 "@pri(5)"
+syntax match taskpaperPri6 "@pri(6)"
+
+
 syn sync fromstart
+
+
+HiLink taskpaperPri1 Error 
+HiLink taskpaperPri2 Special
+HiLink taskpaperPri3 Constant
+HiLink taskpaperPri4 Identifier 
+HiLink taskpaperPri5 PreProc 
+HiLink taskpaperPri6 Statement
 
 "highlighting for Taskpaper groups
 HiLink taskpaperListItem      Identifier
 HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
-HiLink taskpaperDone          NonText
-HiLink taskpaperCancelled     NonText
-HiLink taskpaperComment       Comment
+HiLink taskpaperDone          Comment
+HiLink taskpaperCancelled     Comment
+HiLink taskpaperComment       SignColumn
+
 
 let b:current_syntax = "taskpaper"
 
