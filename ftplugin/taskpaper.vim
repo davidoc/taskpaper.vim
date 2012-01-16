@@ -205,15 +205,7 @@ function! FindTasksByPriority(path, pri, sort)
 	call s:Search(a:path, search, a:sort)
 endfunction
 
-"find top
-map <silent> <leader>k :call FindTasksByPriority(expand('%'), '.', 1)<CR>
-map <silent> <leader>t :call FindTasksByPriority(expand('%'), '[123]', 1)<CR>
-
-map <silent> <leader>r :e ~/Dropbox/Notes/_personal.taskpaper<CR>
-map <silent> <leader>p :e ~/Dropbox/Notes/_projects.taskpaper<CR>
-map <silent> <leader>d :e ~/Dropbox/Notes/_dm.taskpaper<CR>
-map <silent> <leader>i :e ~/Dropbox/Notes/projects/_ideas/index.taskpaper<CR>
-
+command! CTagsUpdate :silent !ctags _Personal.taskpaper _dm.taskpaper
 "command! AllPersonal :call FindAllTasks("personal/*")
 "command! AllProjects :call FindAllTasks("projects/*")
 "command! AllDM :call FindAllTasks("demandmedia/*")
