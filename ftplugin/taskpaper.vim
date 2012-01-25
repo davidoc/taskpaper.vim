@@ -205,7 +205,7 @@ function! FindTasksByPriority(path, pri, sort)
 	call s:Search(a:path, search, a:sort)
 endfunction
 
-command! CTagsUpdate :silent !ctags _Personal.taskpaper _dm.taskpaper
+command! CTagsUpdate :silent !ctags personal.taskpaper dm.taskpaper
 "command! AllPersonal :call FindAllTasks("personal/*")
 "command! AllProjects :call FindAllTasks("projects/*")
 "command! AllDM :call FindAllTasks("demandmedia/*")

@@ -39,13 +39,13 @@ syntax match taskpaperPri6 "@pri(6)"
 
 syn sync fromstart
 
-
 HiLink taskpaperPri1 Error 
-HiLink taskpaperPri2 Special
-HiLink taskpaperPri3 Constant
-HiLink taskpaperPri4 Identifier 
-HiLink taskpaperPri5 PreProc 
-HiLink taskpaperPri6 Statement
+HiLink taskpaperPri2 Statement
+HiLink taskpaperPri3 Identifier
+HiLink taskpaperPri4 PreProc 
+HiLink taskpaperPri5 Special 
+HiLink taskpaperPri6 Constant
+
 
 "highlighting for Taskpaper groups
 HiLink taskpaperListItem      Identifier
@@ -53,7 +53,7 @@ HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
 HiLink taskpaperDone          Comment
 HiLink taskpaperCancelled     Comment
-HiLink taskpaperComment       SignColumn
+HiLink taskpaperComment       SpecialKey
 
 
 let b:current_syntax = "taskpaper"
