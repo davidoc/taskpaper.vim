@@ -76,6 +76,8 @@ The plugin defines some new mappings:
 
     \td     Mark task as done
     \tx     Mark task as cancelled
+    \tt     Mark task as today
+    \tD     Archive @done items
     \tc     Show all tasks with context under cursor
     \tp     Fold all projects
     \ta     Show all projects and tasks

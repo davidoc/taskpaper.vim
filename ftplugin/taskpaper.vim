@@ -46,59 +46,25 @@ function! s:FoldAllProjects()
     %foldclose! 
 endfunction
 
-" toggle @done context tag on a task
-function! s:ToggleDone()
-
-    let line = getline(".")
-    if (line =~ '^\s*- ')
-        let repl = line
-        if (line =~ '@done')
-            let repl = substitute(line, "@done\(.*\)", "", "g")
-            echo "undone!"
-        else
-            let today = strftime(g:task_paper_date_format, localtime())
-            let done_str = " @done(" . today . ")"
-            let repl = substitute(line, "$", done_str, "g")
-            echo "done!"
-        endif
-        call setline(".", repl)
-    else 
-        echo "not a task."
-    endif
-
-endfunction
-
-" toggle @cancelled context tag on a task
-function! s:ToggleCancelled()
-
-    let line = getline(".")
-    if (line =~ '^\s*- ')
-        let repl = line
-        if (line =~ '@cancelled')
-            let repl = substitute(line, "@cancelled\(.*\)", "", "g")
-            echo "uncancelled!"
-        else
-            let today = strftime(g:task_paper_date_format, localtime())
-            let cancelled_str = " @cancelled(" . today . ")"
-            let repl = substitute(line, "$", cancelled_str, "g")
-            echo "cancelled!"
-        endif
-        call setline(".", repl)
-    else 
-        echo "not a task."
-    endif
-
-endfunction
-
 " Set up mappings
-noremap <unique> <script> <Plug>ToggleDone       :call <SID>ToggleDone()<CR>
-noremap <unique> <script> <Plug>ToggleCancelled   :call <SID>ToggleCancelled()<CR>
-noremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
-noremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
-noremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+nnoremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
+nnoremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
+nnoremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
 
-map <buffer> <silent> <Leader>td <Plug>ToggleDone
-map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
-map <buffer> <silent> <Leader>tc <Plug>ShowContext
-map <buffer> <silent> <Leader>ta <Plug>ShowAll
-map <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
+\                               :<C-u>call taskpaper#archive_done()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleCancelled
+\                               :call taskpaper#toggle_cancelled()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleDone
+\                               :call taskpaper#toggle_done()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleToday
+\                               :call taskpaper#toggle_tag('today')<CR>
+
+nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
+nmap <buffer> <silent> <Leader>ta <Plug>ShowAll
+nmap <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+
+nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
+nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
+nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
+nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
