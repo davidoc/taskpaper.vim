@@ -9,8 +9,18 @@ if exists("loaded_task_paper")
 endif
 let loaded_task_paper = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 " Define a default date format
-if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
+if !exists('g:task_paper_date_format')
+    let g:task_paper_date_format = "%Y-%m-%d"
+endif
+
+" Define a default archive project name
+if !exists('g:task_paper_archive_project')
+    let g:task_paper_archive_project = "Archive"
+endif
 
 "add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
@@ -68,3 +78,5 @@ nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
 nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
 nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
 nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
+
+let &cpo = s:save_cpo

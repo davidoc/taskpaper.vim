@@ -75,6 +75,10 @@ function! taskpaper#move(projects, ...)
         let lines = [line('.')]
     endif
 
+    if empty(lines)
+	return 1
+    endif
+
     let save_reg = [getreg('a'), getregtype('a')]
     call setreg('a', '')
 
@@ -148,13 +152,14 @@ function! taskpaper#update_project()
 endfunction
 
 function! taskpaper#archive_done()
-    let archive_start = search('^Archive:', 'cw')
+    let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
-	call append('$', 'Archive:')
+	call append('$', g:task_paper_archive_project . ':')
 	let archive_start = line('$')
+	let archive_end = 0
+    else
+	let archive_end = search('^\S\+:', 'W')
     endif
-
-    let archive_end = search('^\S\+:', 'W')
 
     let lines = []
 
@@ -184,7 +189,7 @@ function! taskpaper#archive_done()
         endwhile
     endif
 
-    call taskpaper#move(['Archive'], lines)
+    call taskpaper#move([g:task_paper_archive_project], lines)
     return 1
 endfunction
 
