@@ -65,51 +65,46 @@ function! taskpaper#update_tag(tag, value)
 endfunction
 
 function! taskpaper#move(projects, ...)
-    if a:0 > 0
-        if type(a:1) != type([])
-            let lines = [a:1]
-        else
-            let lines = a:1
-        endif
-    else
-        let lines = [line('.')]
-    endif
-
-    if empty(lines)
-	return 1
-    endif
+    let line = a:0 > 0 ? a:1 : line('.')
 
     let save_reg = [getreg('a'), getregtype('a')]
     call setreg('a', '')
 
-    execute lines[0] . 'delete a'
-    let deleted = 1
+    let depth = len(matchstr(getline(line), '^\t*'))
+    let range = [line, line]
 
-    for line in lines[1:]
-        execute line - deleted . 'delete A'
-        let deleted += 1
+    for l in range(line + 1, line('$'))
+        if depth < len(matchstr(getline(l), '^\t*'))
+            let range[1] = l
+        else
+            break
+        endif
     endfor
 
-    let depth = 0
+    silent execute join(range, ',') . 'delete a'
+    let deleted = range[1] - range[0] + 1
+
+    let project_depth = 0
     call cursor(1, 1)
 
     for project in a:projects
-        if !search('\v^\t{' . depth . '}\V' . project . ':', 'c')
+        if !search('\v^\t{' . project_depth . '}\V' . project . ':', 'c')
             normal! u
             echoe "project is not found: " . project
             return -1
         endif
-        let depth += 1
+        let project_depth += 1
     endfor
 
-    let tab = repeat("\t", depth)
-    call setreg('a', substitute(getreg('a'), '\v(^|\n)\t+', '\1' . tab, 'g'))
+    let tabs = repeat("\t", project_depth)
+    call setreg('a', substitute(getreg('a'), '\v(^|\n)\t{' . depth . '}',
+    \           '\1' . tabs, 'g'))
 
-    normal! "ap
+    put a
 
     call setreg('a', save_reg[0], save_reg[1])
 
-    return 1
+    return deleted
 endfunction
 
 function! taskpaper#toggle_done()
@@ -161,15 +156,14 @@ function! taskpaper#archive_done()
 	let archive_end = search('^\S\+:', 'W')
     endif
 
-    let lines = []
-
     call cursor(1, 1)
+    let moved = 0
 
     while 1
-        let line = search('@done', 'W', archive_start - 1)
+        let line = search('@done', 'W', archive_start - moved)
         if line != 0 && line < archive_start
             call taskpaper#update_project()
-            call add(lines, line)
+            let moved += taskpaper#move([g:task_paper_archive_project])
         else
             break
         endif
@@ -182,15 +176,14 @@ function! taskpaper#archive_done()
             let line = search('@done', 'W')
             if line != 0 && line < line('$')
                 call taskpaper#update_project()
-                call add(lines, line)
+                let moved += taskpaper#move([g:task_paper_archive_project])
             else
                 break
             endif
         endwhile
     endif
 
-    call taskpaper#move([g:task_paper_archive_project], lines)
-    return 1
+    return moved
 endfunction
 
 let &cpo = s:save_cpo
