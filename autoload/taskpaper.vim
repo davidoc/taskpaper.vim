@@ -111,13 +111,13 @@ endfunction
 
 function! taskpaper#update_project()
     let indent = matchstr(getline("."), '^\t*')
-    let depth = len(indent) - 1
+    let depth = len(indent)
 
     let projects = []
 
-    for linenr in range(line('.') - 1, 1, -1)
+    for linenr in range(line('.'), 1, -1)
         let line = getline(linenr)
-        let ml = matchlist(line, '\v^\t{,' . depth . '}([^\t:]+):')
+        let ml = matchlist(line, '\v^\t{0,' . depth . '}([^\t:]+):')
         if empty(ml)
             continue
         endif
