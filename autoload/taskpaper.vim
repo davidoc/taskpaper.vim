@@ -144,11 +144,11 @@ endfunction
 function! taskpaper#archive_done()
     let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
-	call append('$', g:task_paper_archive_project . ':')
-	let archive_start = line('$')
-	let archive_end = 0
+        call append('$', g:task_paper_archive_project . ':')
+        let archive_start = line('$')
+        let archive_end = 0
     else
-	let archive_end = search('^\S\+:', 'W')
+        let archive_end = search('^\S\+:', 'W')
     endif
 
     call cursor(1, 1)
