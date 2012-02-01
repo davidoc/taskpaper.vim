@@ -18,13 +18,12 @@ endif
 
 syn case ignore
 
-syn match  taskpaperComment "^.*$"
-syn match  taskpaperProject       /^.\+:\s*$/
-syn match  taskpaperLineContinue ".$" contained
-syn match  taskpaperListItem  "^\s*[-+]\s\+" 
-syn match  taskpaperContext  "@[A-Za-z0-9_]\+"
-syn match  taskpaperDone "^\s*[-+]\s\+.*@[Dd]one.*$"
-syn match  taskpaperCancelled "^\s*[-+]\s\+.*@[Cc]ancelled.*$"
+syn match taskpaperComment	/^.*$/
+syn match taskpaperProject	/^.\+:$/
+syn match taskpaperListItem	/^\t*-\s\+/
+syn match taskpaperContext	/@[^\s(]\+\(([^)]*)\)\?/
+syn match taskpaperDone		/^.*\s@done\(\(\s\|([^)]*)\).*\)\?$/
+syn match taskpaperCancelled	/^.*\s@cancelled\(\(\s\|([^)]*)\).*\)\?$/
 
 syn region taskpaperProjectFold start=/^.\+:\s*$/ end=/^\s*$/ transparent fold
 
