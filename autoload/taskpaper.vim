@@ -159,6 +159,7 @@ function! taskpaper#archive_done()
         if line != 0 && line < archive_start
             call taskpaper#update_project()
             let moved += taskpaper#move([g:task_paper_archive_project])
+            call cursor(line, 1)
         else
             break
         endif
@@ -172,6 +173,7 @@ function! taskpaper#archive_done()
             if line != 0 && line < line('$')
                 call taskpaper#update_project()
                 let moved += taskpaper#move([g:task_paper_archive_project])
+                call cursor(line, 1)
             else
                 break
             endif
