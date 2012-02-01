@@ -10,11 +10,6 @@ set cpo&vim
 function! s:add_delete_tag(tag, value, add)
     let cur_line = getline(".")
 
-    if cur_line !~# '^\t\+- '
-        echo "not a task."
-        return -1
-    endif
-
     let tag = " @" . a:tag
     if a:value != ''
         let tag .= "(" . a:value . ")"
