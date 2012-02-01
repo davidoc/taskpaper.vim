@@ -25,6 +25,9 @@ endif
 "add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
+" Change 'comments' to continue to write a task item.
+setlocal comments=b:-
+
 "set default folding: by project (syntax), open (up to 99 levels), disabled 
 setlocal foldmethod=syntax
 setlocal foldlevel=99
