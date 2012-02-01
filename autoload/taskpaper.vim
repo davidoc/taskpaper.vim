@@ -63,7 +63,6 @@ function! taskpaper#move(projects, ...)
     let line = a:0 > 0 ? a:1 : line('.')
 
     let save_reg = [getreg('a'), getregtype('a')]
-    call setreg('a', '')
 
     let depth = len(matchstr(getline(line), '^\t*'))
     let range = [line, line]
@@ -91,13 +90,11 @@ function! taskpaper#move(projects, ...)
         let project_depth += 1
     endfor
 
-    let tabs = repeat("\t", project_depth)
-    call setreg('a', substitute(getreg('a'), '\v(^|\n)\t{' . depth . '}',
-    \           '\1' . tabs, 'g'))
-
     put a
-
     call setreg('a', save_reg[0], save_reg[1])
+
+    let tabs = repeat("\t", project_depth)
+    silent execute "'[,']" . 's/^\t\{' . depth . '\}/' . tabs
 
     return deleted
 endfunction
