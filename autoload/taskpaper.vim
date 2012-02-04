@@ -180,4 +180,39 @@ function! taskpaper#archive_done()
     return moved
 endfunction
 
+function! taskpaper#fold(lnum, tag)
+    let line = getline(a:lnum)
+    let level = foldlevel(a:lnum)
+
+    if line =~? a:tag
+	return 0
+    elseif line !~# '^.\+:$'
+	return 1
+    elseif level != -1
+	return level
+    endif
+
+    let depth = len(matchstr(getline(a:lnum), '^\t*'))
+
+    for l in range(a:lnum + 1, line('$'))
+        if depth >= len(matchstr(getline(l), '^\t*'))
+	    break
+	endif
+
+	if getline(l) =~? a:tag
+	    return 0
+	endif
+    endfor
+    return 1
+endfunction
+
+function! taskpaper#search(...)
+    let pat = a:0 > 0 ? a:1 : '\<' . expand('<cword>') . '\>'
+
+    let b:taskpaper_search_pattern = pat
+    setlocal foldexpr=taskpaper#fold(v:lnum,b:taskpaper_search_pattern)
+    setlocal foldminlines=0 foldtext=''
+    setlocal foldmethod=expr foldlevel=0 foldenable
+endfunction
+
 let &cpo = s:save_cpo
