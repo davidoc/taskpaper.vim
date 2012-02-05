@@ -69,11 +69,11 @@ nnoremap <unique> <script> <Plug>TaskPaperShowToday
 nnoremap <unique> <script> <Plug>TaskPaperShowCancelled
 \                       :<C-u>call taskpaper#search('\<@cancelled\>')<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleCancelled
-\                       :call taskpaper#toggle_cancelled()<CR>
+\                       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleDone
-\                       :call taskpaper#toggle_done()<CR>
+\                       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleToday
-\                       :call taskpaper#toggle_tag('today')<CR>
+\                       :call taskpaper#toggle_tag('today', '')<CR>
 
 nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
 nmap <buffer> <silent> <Leader>ta <Plug>ShowAll

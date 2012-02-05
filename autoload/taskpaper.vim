@@ -38,7 +38,7 @@ function! s:add_delete_tag(tag, value, add)
 endfunction
 
 function! taskpaper#add_tag(tag, ...)
-    let value = a:0 > 0 ? a:1 : ''
+    let value = a:0 > 0 ? a:1 : input('Value: ')
     return s:add_delete_tag(a:tag, value, 1)
 endfunction
 
@@ -48,15 +48,22 @@ function! taskpaper#delete_tag(tag, ...)
 endfunction
 
 function! taskpaper#toggle_tag(tag, ...)
-    let value = a:0 > 0 ? a:1 : ''
     if !taskpaper#delete_tag(a:tag, '')
-        call taskpaper#add_tag(a:tag, value)
+	if a:0 > 0
+	    call taskpaper#add_tag(a:tag, a:1)
+	else
+	    call taskpaper#add_tag(a:tag)
+	endif
     endif
 endfunction
 
 function! taskpaper#update_tag(tag, value)
     call taskpaper#delete_tag(a:tag, '')
     call taskpaper#add_tag(a:tag, a:value)
+endfunction
+
+function! taskpaper#date()
+    return strftime(g:task_paper_date_format, localtime())
 endfunction
 
 function! taskpaper#move(projects, ...)
@@ -97,16 +104,6 @@ function! taskpaper#move(projects, ...)
     silent execute "'[,']" . 's/^\t\{' . depth . '\}/' . tabs
 
     return deleted
-endfunction
-
-function! taskpaper#toggle_done()
-    let today = strftime(g:task_paper_date_format, localtime())
-    call taskpaper#toggle_tag('done', today)
-endfunction
-
-function! taskpaper#toggle_cancelled()
-    let today = strftime(g:task_paper_date_format, localtime())
-    call taskpaper#toggle_tag('cancelled', today)
 endfunction
 
 function! taskpaper#update_project()
