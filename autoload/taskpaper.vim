@@ -207,7 +207,10 @@ function! taskpaper#fold(lnum, tag)
 endfunction
 
 function! taskpaper#search(...)
-    let pat = a:0 > 0 ? a:1 : '\<' . expand('<cword>') . '\>'
+    let pat = a:0 > 0 ? a:1 : input('Search: ')
+    if pat == ''
+	return
+    endif
 
     let b:taskpaper_search_pattern = pat
     setlocal foldexpr=taskpaper#fold(v:lnum,b:taskpaper_search_pattern)

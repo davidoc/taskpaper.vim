@@ -35,10 +35,11 @@ setlocal nofoldenable
 
 "show tasks from context under the cursor
 function! s:ShowContext()
-    if expand('<cword>') =~ '@\k*'
-        call taskpaper#search()
+    let cword = expand('<cword>')
+    if cword =~ '@\k*'
+        call taskpaper#search('\<' . cword . '\>')
     else
-        echo "'" expand('<cword>') "' is not a context."
+        echo '"' . cword . '" is not a context.'
     endif
 endfunction
 
@@ -58,6 +59,8 @@ endfunction
 nnoremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 nnoremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
 nnoremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperSearch
+\                       :<C-u>call taskpaper#search()<CR>
 
 nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
 \                       :<C-u>call taskpaper#archive_done()<CR>
@@ -75,6 +78,7 @@ nnoremap <unique> <script> <Plug>TaskPaperToggleToday
 nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
 nmap <buffer> <silent> <Leader>ta <Plug>ShowAll
 nmap <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearch
 
 nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
 nmap <buffer> <silent> <Leader>tT <Plug>TaskPaperShowToday
