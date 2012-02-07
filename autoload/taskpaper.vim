@@ -67,15 +67,19 @@ function! taskpaper#date()
 endfunction
 
 function! taskpaper#move(projects, ...)
-    let line = a:0 > 0 ? a:1 : line('.')
+    let lnum = a:0 > 0 ? a:1 : line('.')
 
     let save_reg = [getreg('a'), getregtype('a')]
 
-    let depth = len(matchstr(getline(line), '^\t*'))
-    let range = [line, line]
+    let depth = len(matchstr(getline(lnum), '^\t*'))
+    let range = [lnum, lnum]
 
-    for l in range(line + 1, line('$'))
-        if depth < len(matchstr(getline(l), '^\t*'))
+    for l in range(lnum + 1, line('$'))
+	let line = getline(l)
+
+	if line =~ '^\s*$'
+	    continue
+	elseif depth < len(matchstr(line, '^\t*'))
             let range[1] = l
         else
             break
