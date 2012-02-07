@@ -181,11 +181,11 @@ function! taskpaper#archive_done()
     return moved
 endfunction
 
-function! taskpaper#fold(lnum, tag)
+function! taskpaper#fold(lnum, pat)
     let line = getline(a:lnum)
     let level = foldlevel(a:lnum)
 
-    if line =~? a:tag
+    if line =~? a:pat
 	return 0
     elseif line !~# '^.\+:$'
 	return 1
@@ -195,12 +195,14 @@ function! taskpaper#fold(lnum, tag)
 
     let depth = len(matchstr(getline(a:lnum), '^\t*'))
 
-    for l in range(a:lnum + 1, line('$'))
-        if depth >= len(matchstr(getline(l), '^\t*'))
+    for lnum in range(a:lnum + 1, line('$'))
+	let line = getline(lnum)
+
+        if depth >= len(matchstr(line, '^\t*'))
 	    break
 	endif
 
-	if getline(l) =~? a:tag
+	if line =~? a:pat
 	    return 0
 	endif
     endfor
@@ -213,8 +215,7 @@ function! taskpaper#search(...)
 	return
     endif
 
-    let b:taskpaper_search_pattern = pat
-    setlocal foldexpr=taskpaper#fold(v:lnum,b:taskpaper_search_pattern)
+    setlocal foldexpr=taskpaper#fold(v:lnum,pat)
     setlocal foldminlines=0 foldtext=''
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction

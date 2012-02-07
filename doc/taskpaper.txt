@@ -29,6 +29,7 @@ Installation
 It should be safe to simply unpack the package into your .vim directory.
 It contains the following files:
 
+    autoload/taskpaper.vim
     doc/taskpaper.txt
     doc/example.taskpaper
     doc/taskpaper_licence.txt
@@ -78,11 +79,12 @@ The plugin defines some new mappings:
     \tx     Mark task as cancelled
     \tt     Mark task as today
     \tD     Archive @done items
-    \tX     Show tasks with @cancelled tag
-    \tT     Show tasks with @today tag
+    \tX     Show tasks marked as cancelled
+    \tT     Show tasks marked as today
     \ts     Search for items including keyword
     \tc     Show all tasks with context under cursor
     \tp     Fold all projects
+    \t.     Fold all notes
     \ta     Show all projects and tasks
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)

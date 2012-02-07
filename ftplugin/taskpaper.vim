@@ -60,20 +60,22 @@ nnoremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 nnoremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
 nnoremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
 nnoremap <unique> <script> <Plug>TaskPaperSearch
-\                       :<C-u>call taskpaper#search()<CR>
+\       :<C-u>call taskpaper#search()<CR>
 
 nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
-\                       :<C-u>call taskpaper#archive_done()<CR>
+\       :<C-u>call taskpaper#archive_done()<CR>
 nnoremap <unique> <script> <Plug>TaskPaperShowToday
-\                       :<C-u>call taskpaper#search('\<@today\>')<CR>
+\       :<C-u>call taskpaper#search('\<@today\>')<CR>
 nnoremap <unique> <script> <Plug>TaskPaperShowCancelled
-\                       :<C-u>call taskpaper#search('\<@cancelled\>')<CR>
+\       :<C-u>call taskpaper#search('\<@cancelled\>')<CR>
+nnoremap <unique> <script> <Plug>TaskPaperHideNotes
+\       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleCancelled
-\                       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
+\       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleDone
-\                       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
+\       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
 nnoremap <unique> <script> <Plug>TaskPaperToggleToday
-\                       :call taskpaper#toggle_tag('today', '')<CR>
+\       :call taskpaper#toggle_tag('today', '')<CR>
 
 nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
 nmap <buffer> <silent> <Leader>ta <Plug>ShowAll
@@ -83,6 +85,7 @@ nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearch
 nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
 nmap <buffer> <silent> <Leader>tT <Plug>TaskPaperShowToday
 nmap <buffer> <silent> <Leader>tX <Plug>TaskPaperShowCancelled
+nmap <buffer> <silent> <Leader>t. <Plug>TaskPaperHideNotes
 nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
 nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
 nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
