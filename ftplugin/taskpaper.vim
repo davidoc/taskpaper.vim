@@ -25,6 +25,9 @@ endif
 "add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
+" Tab character has special meaning on TaskPaper
+setlocal noexpandtab
+
 " Change 'comments' to continue to write a task item.
 setlocal comments=b:-
 
