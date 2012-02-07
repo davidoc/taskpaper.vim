@@ -228,4 +228,21 @@ function! taskpaper#search(...)
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
 
+function! taskpaper#_fold_projects(lnum)
+    let line = getline(a:lnum)
+
+    if line !~ '^.\+:$'
+	return '='
+    endif
+
+    let depth = len(matchstr(line, '^\t*'))
+    return '>' . (depth + 1)
+endfunction
+
+function! taskpaper#fold_projects()
+    setlocal foldexpr=taskpaper#_fold_projects(v:lnum)
+    setlocal foldminlines=0 foldtext=foldtext()
+    setlocal foldmethod=expr foldlevel=0 foldenable
+endfunction
+
 let &cpo = s:save_cpo

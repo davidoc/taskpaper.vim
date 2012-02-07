@@ -28,11 +28,6 @@ setlocal iskeyword+=@-@
 " Change 'comments' to continue to write a task item.
 setlocal comments=b:-
 
-"set default folding: by project (syntax), open (up to 99 levels), disabled 
-setlocal foldmethod=syntax
-setlocal foldlevel=99
-setlocal nofoldenable
-
 "show tasks from context under the cursor
 function! s:ShowContext()
     let cword = expand('<cword>')
@@ -58,7 +53,8 @@ endfunction
 " Set up mappings
 nnoremap <unique> <script> <Plug>ShowContext      :call <SID>ShowContext()<CR>
 nnoremap <unique> <script> <Plug>ShowAll          :call <SID>ShowAll()<CR>
-nnoremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperFoldProjects
+\       :<C-u>call taskpaper#fold_projects()<CR>
 nnoremap <unique> <script> <Plug>TaskPaperSearch
 \       :<C-u>call taskpaper#search()<CR>
 
@@ -84,7 +80,7 @@ nnoremap <unique> <script> <Plug>TaskPaperToggleToday
 
 nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
 nmap <buffer> <silent> <Leader>ta <Plug>ShowAll
-nmap <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
+nmap <buffer> <silent> <Leader>tp <Plug>TaskPaperFoldProjects
 nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearch
 
 nmap <buffer> <silent> <Leader>tj <Plug>TaskPaperNextProject

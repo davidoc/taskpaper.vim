@@ -25,8 +25,6 @@ syn match taskpaperContext	/@[^\s(]\+\(([^)]*)\)\?/
 syn match taskpaperDone		/^.*\s@done\(\(\s\|([^)]*)\).*\)\?$/
 syn match taskpaperCancelled	/^.*\s@cancelled\(\(\s\|([^)]*)\).*\)\?$/
 
-syn region taskpaperProjectFold start=/^.\+:\s*$/ end=/^\s*$/ transparent fold
-
 syn sync fromstart
 
 "highlighting for Taskpaper groups
