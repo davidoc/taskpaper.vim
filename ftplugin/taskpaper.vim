@@ -62,6 +62,11 @@ nnoremap <unique> <script> <Plug>FoldAllProjects  :call <SID>FoldAllProjects()<C
 nnoremap <unique> <script> <Plug>TaskPaperSearch
 \       :<C-u>call taskpaper#search()<CR>
 
+nnoremap <unique> <script> <Plug>TaskPaperNextProject
+\       :<C-u>call taskpaper#next_project()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperPreviousProject
+\       :<C-u>call taskpaper#previous_project()<CR>
+
 nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
 \       :<C-u>call taskpaper#archive_done()<CR>
 nnoremap <unique> <script> <Plug>TaskPaperShowToday
@@ -81,6 +86,9 @@ nmap <buffer> <silent> <Leader>tc <Plug>ShowContext
 nmap <buffer> <silent> <Leader>ta <Plug>ShowAll
 nmap <buffer> <silent> <Leader>tp <Plug>FoldAllProjects
 nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearch
+
+nmap <buffer> <silent> <Leader>tj <Plug>TaskPaperNextProject
+nmap <buffer> <silent> <Leader>tk <Plug>TaskPaperPreviousProject
 
 nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
 nmap <buffer> <silent> <Leader>tT <Plug>TaskPaperShowToday

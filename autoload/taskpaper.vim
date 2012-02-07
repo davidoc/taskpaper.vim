@@ -66,6 +66,14 @@ function! taskpaper#date()
     return strftime(g:task_paper_date_format, localtime())
 endfunction
 
+function! taskpaper#next_project()
+    call search('^\t*\zs.\+:$', 'w')
+endfunction
+
+function! taskpaper#previous_project()
+    call search('^\t*\zs.\+:$', 'bw')
+endfunction
+
 function! taskpaper#move(projects, ...)
     let lnum = a:0 > 0 ? a:1 : line('.')
 
