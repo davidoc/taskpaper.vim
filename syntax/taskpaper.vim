@@ -22,7 +22,6 @@ syn match  taskpaperComment      "^.*$"
 syn match  taskpaperSubProject   /^\t*.\+:\s*$/ contained
 syn match  taskpaperListItem     "^\t*[-]\s\+"
 syn match  taskpaperContext      "@[A-Za-z0-9_]\+"
-syn match  taskpaperDone         "^\t*[-]\s\+.*@[Dd]one.*$"
 syn match  taskpaperDone         ".*@[Dd]one\%(([0-9\-]\+)\)\=.*$"
 syn match  taskpaperCancelled    "^\t*[-]\s\+.*@[Cc]ancelled.*$"
 

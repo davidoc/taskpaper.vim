@@ -55,7 +55,7 @@ function! s:ShowProject()
         call add(synlist, synIDattr(id, "name"))
     endfor
     if project =~ ':$' ||
-                \ index(synlist, 'taskpaperProjectFold') != -1
+                \ index(synlist, 'taskpaperProject') != -1
         setl foldenable
         setl foldmethod=syntax
         %foldclose!
