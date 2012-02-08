@@ -18,8 +18,8 @@ endif
 
 syn case ignore
 
-syn match taskpaperComment	/^.*$/
-syn match taskpaperProject	/^.\+:$/
+syn match taskpaperComment	/^.*$/ contains=taskpaperContext
+syn match taskpaperProject	/^.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$/ contains=taskpaperContext
 syn match taskpaperListItem	/^\t*-\s\+/
 syn match taskpaperContext	/@[^\s(]\+\(([^)]*)\)\?/
 syn match taskpaperDone		/^.*\s@done\(\(\s\|([^)]*)\).*\)\?$/

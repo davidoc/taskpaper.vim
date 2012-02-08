@@ -67,11 +67,11 @@ function! taskpaper#date()
 endfunction
 
 function! taskpaper#next_project()
-    call search('^\t*\zs.\+:$', 'w')
+    call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'w')
 endfunction
 
 function! taskpaper#previous_project()
-    call search('^\t*\zs.\+:$', 'bw')
+    call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'bw')
 endfunction
 
 function! taskpaper#move(projects, ...)
@@ -195,7 +195,7 @@ function! taskpaper#fold(lnum, pat)
 
     if line =~? a:pat
 	return 0
-    elseif line !~# '^.\+:$'
+    elseif synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
 	return 1
     elseif level != -1
 	return level
@@ -229,12 +229,11 @@ function! taskpaper#search(...)
 endfunction
 
 function! taskpaper#_fold_projects(lnum)
-    let line = getline(a:lnum)
-
-    if line !~ '^.\+:$'
+    if synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
 	return '='
     endif
 
+    let line = getline(a:lnum)
     let depth = len(matchstr(line, '^\t*'))
     return '>' . (depth + 1)
 endfunction
