@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-15th February 2011
+8th February 2012
 
 Introduction
 =============
@@ -29,6 +29,7 @@ Installation
 It should be safe to simply unpack the package into your .vim directory.
 It contains the following files:
 
+    after/plugin/taskpaper.vim
     doc/taskpaper.txt
     doc/example.taskpaper
     doc/taskpaper_licence.txt
@@ -53,8 +54,8 @@ The syntax file highlights project headings and task contexts (tags), and
 "greys out" completed tasks. The exact style of the displayed file depends
 on your Vim colour scheme. 
 
-A project heading is a piece of text ending in a colon.  Projects can be
-folded using the "syntax" foldmethod.
+A project heading is a piece of text ending in a colon.  Top-level projects 
+can be folded using the "syntax" foldmethod.
 
 A task is a line beginning with a hyphen '-' and can have zero or more
 context tags.
@@ -77,7 +78,7 @@ The plugin defines some new mappings:
     \td     Mark task as done
     \tx     Mark task as cancelled
     \tc     Show all tasks with context under cursor
-    \tp     Fold all projects
+    \tp     Fold all top-level projects
     \ta     Show all projects and tasks
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
@@ -91,9 +92,9 @@ desired context tag (e.g. using movement or search commands) and then use
 the `\tc` command. This will fold all the irrelevant tasks leaving only the
 tasks in the current context visible.
 
-To fold all projects leaving only the headings visible use the `\tp` command.
-Standard fold commands can be used to open (`zo`) and close (`zc`) individual
-projects.
+To fold all top-level projects leaving only the headings visible use the `\tp`
+command. Standard fold commands can be used to open (`zo`) and close (`zc`)
+individual projects.
 
 To show all projects and tasks use the `\ta` command. This disables folding so
 that the entire file is expanded.
@@ -108,6 +109,7 @@ define the `task_paper_date_format` variable. The format matches your system's
 For example, to include the date and time in ISO8601 format:
 
     let g:task_paper_date_format = "%Y-%m-%dT%H:%M:%S%z"
+
 File-type Detection
 ====================
 
@@ -117,7 +119,7 @@ type for all files with the ".taskpaper" extension.
 Licence
 ========
 
-Copyright (C) 2007--2011 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
+Copyright (C) 2007--2012 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
