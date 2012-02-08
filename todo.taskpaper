@@ -1,5 +1,10 @@
+Issues:
+	- #11 Enter creates sub-tasks, but doesn't indent properly or handle sub-projects
+	- #20 \tp folds down everything into first heading, not just the project headings
+
 Release:
-Tasks to be completed before next release
+	Tasks to be completed before next release
 	- Note compatibility with ToDoPaper
 	- stylesheets for tags (e.g. "fail" produces red bg)
 	- include patch for notes. @done
+
