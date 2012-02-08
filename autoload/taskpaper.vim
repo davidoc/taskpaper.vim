@@ -228,6 +228,19 @@ function! taskpaper#search(...)
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
 
+function! taskpaper#search_tag(...)
+    if a:0 > 0
+	let tag = a:1
+    else
+	let cword = expand('<cword>')
+	let tag = input('Tag: ', cword =~ '@\k\+' ? cword[1:] : '')
+    endif
+
+    if tag != ''
+	call taskpaper#search('\<@' . tag . '\>')
+    endif
+endfunction
+
 function! taskpaper#_fold_projects(lnum)
     if synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
 	return '='
