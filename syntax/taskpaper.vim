@@ -18,15 +18,17 @@ endif
 
 syn case ignore
 
-syn match  taskpaperComment "^.*$"
-syn match  taskpaperSubProject       /^\t*.\+:\s*$/ contained
-syn match  taskpaperListItem  "^\t*[-]\s\+"
-syn match  taskpaperContext  "@[A-Za-z0-9_]\+"
-syn match  taskpaperDone "^\t*[-]\s\+.*@[Dd]one.*$"
-syn match  taskpaperCancelled "^\t*[-]\s\+.*@[Cc]ancelled.*$"
+syn match  taskpaperComment      "^.*$"
+syn match  taskpaperSubProject   /^\t*.\+:\s*$/ contained
+syn match  taskpaperListItem     "^\t*[-]\s\+"
+syn match  taskpaperContext      "@[A-Za-z0-9_]\+"
+syn match  taskpaperDone         "^\t*[-]\s\+.*@[Dd]one.*$"
+syn match  taskpaperDone         ".*@[Dd]one\%(([0-9\-]\+)\)\=.*$"
+syn match  taskpaperCancelled    "^\t*[-]\s\+.*@[Cc]ancelled.*$"
 
 "syn region taskpaperProjectFold matchgroup=Title start=/^\z(\t*\)[^\t]\+:\s*$/ skip=/^\z1\t/ end=/\ze\(^\z1[^\t]\+:\s*$\)/ fold transparent extend contains=ALL
-syn region taskpaperProject matchgroup=Title start=/^[^\t]\+:\s*$/ skip=/^\t/ end=/\ze\(^[^\t]\+:\s*$\)/ fold transparent extend contains=ALLBUT,taskpaperProject
+"syn region taskpaperProject matchgroup=Title start=/^[^\t]\+:\s*$/ skip=/^\t/ end=/\ze\(^[^\t]\+:\s*$\)/ fold transparent extend contains=ALLBUT,taskpaperProject
+syn region taskpaperProject start=/^\z(\s*\)[^-].\+:/ end=/^\ze\S\|^\zs$/ transparent fold contains=ALL
 
 syn sync fromstart
 
