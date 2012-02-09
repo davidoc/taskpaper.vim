@@ -133,11 +133,11 @@ command! -nargs=1 -range -buffer Tag
       \| call setpos('.', s:c)
 
 " Set up mappings
-noremap <unique> <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
-noremap <unique> <script> <Plug>ToggleCancelled :call <SID>ToggleCancelled()<CR>
-noremap <unique> <script> <Plug>ShowContext     :call <SID>ShowContext()<CR>
-noremap <unique> <script> <Plug>ShowAll         :call <SID>ShowAll()<CR>
-noremap <unique> <script> <Plug>ShowProject     :call <SID>ShowProject()<CR>
+noremap <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
+noremap <script> <Plug>ToggleCancelled :call <SID>ToggleCancelled()<CR>
+noremap <script> <Plug>ShowContext     :call <SID>ShowContext()<CR>
+noremap <script> <Plug>ShowAll         :call <SID>ShowAll()<CR>
+noremap <script> <Plug>ShowProject     :call <SID>ShowProject()<CR>
 
 map <buffer> <silent> <Leader>td <Plug>ToggleDone
 map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
