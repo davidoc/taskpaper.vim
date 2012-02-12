@@ -270,7 +270,7 @@ function! taskpaper#newline()
     let depth = len(matchstr(pline, '^\t*'))
     call setline(lnum, repeat("\t", depth + 1) . '- ')
 
-    return ''
+    return "\<End>"
 endfunction
 
 let &cpo = s:save_cpo

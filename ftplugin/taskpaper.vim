@@ -61,9 +61,9 @@ nnoremap <unique> <script> <Plug>TaskPaperToggleToday
 \       :call taskpaper#toggle_tag('today', '')<CR>
 
 nnoremap <unique> <script> <Plug>TaskPaperNewline
-\       o<C-r>=taskpaper#newline()<CR><End>
+\       o<C-r>=taskpaper#newline()<CR>
 inoremap <unique> <script> <Plug>TaskPaperNewline
-\       <CR><C-r>=taskpaper#newline()<CR><End>
+\       <CR><C-r>=taskpaper#newline()<CR>
 
 nmap <buffer> <silent> <Leader>tp <Plug>TaskPaperFoldProjects
 nmap <buffer> <silent> <Leader>t. <Plug>TaskPaperFoldNotes
