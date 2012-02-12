@@ -257,4 +257,20 @@ function! taskpaper#fold_projects()
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
 
+function! taskpaper#newline()
+    let lnum = line('.')
+    let line = getline('.')
+
+    if lnum == 1 || line !~ '^\s*$' ||
+    \  synIDattr(synID(lnum - 1, 1, 1), "name") != 'taskpaperProject'
+	return ''
+    endif
+
+    let pline = getline(lnum - 1)
+    let depth = len(matchstr(pline, '^\t*'))
+    call setline(lnum, repeat("\t", depth + 1) . '- ')
+
+    return ''
+endfunction
+
 let &cpo = s:save_cpo
