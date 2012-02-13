@@ -85,6 +85,7 @@ The plugin defines some new mappings:
     \ts     Search for items including tag
     \tp     Fold all projects
     \t.     Fold all notes
+    \tP     Focus on the current project
     \tj     Go to next project
     \tk     Go to previous project
 
