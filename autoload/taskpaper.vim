@@ -77,7 +77,10 @@ endfunction
 function! taskpaper#move(projects, ...)
     let lnum = a:0 > 0 ? a:1 : line('.')
 
+    let save_fen = &l:foldenable
     let save_reg = [getreg('a'), getregtype('a')]
+
+    setlocal nofoldenable
 
     let depth = len(matchstr(getline(lnum), '^\t*'))
     let range = [lnum, lnum]
@@ -103,6 +106,8 @@ function! taskpaper#move(projects, ...)
     for project in a:projects
         if !search('\v^\t{' . project_depth . '}\V' . project . ':', 'c')
             normal! u
+	    call setreg('a', save_reg[0], save_reg[1])
+	    let &l:foldenable = save_fen
             echoe "project is not found: " . project
             return -1
         endif
@@ -110,10 +115,12 @@ function! taskpaper#move(projects, ...)
     endfor
 
     put a
-    call setreg('a', save_reg[0], save_reg[1])
 
     let tabs = repeat("\t", project_depth)
     silent execute "'[,']" . 's/^\t\{' . depth . '\}/' . tabs
+
+    call setreg('a', save_reg[0], save_reg[1])
+    let &l:foldenable = save_fen
 
     return deleted
 endfunction
