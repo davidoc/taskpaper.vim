@@ -18,16 +18,12 @@ endif
 
 syn case ignore
 
-syn match  taskpaperComment      "^.*$"
-syn match  taskpaperSubProject   /^\t*.\+:\s*$/ contained
-syn match  taskpaperListItem     "^\t*[-]\s\+"
-syn match  taskpaperContext      "@[A-Za-z0-9_]\+"
-syn match  taskpaperDone         ".*@[Dd]one\%(([0-9\-]\+)\)\=.*$"
-syn match  taskpaperCancelled    "^\t*[-]\s\+.*@[Cc]ancelled.*$"
-
-"syn region taskpaperProjectFold matchgroup=Title start=/^\z(\t*\)[^\t]\+:\s*$/ skip=/^\z1\t/ end=/\ze\(^\z1[^\t]\+:\s*$\)/ fold transparent extend contains=ALL
-"syn region taskpaperProject matchgroup=Title start=/^[^\t]\+:\s*$/ skip=/^\t/ end=/\ze\(^[^\t]\+:\s*$\)/ fold transparent extend contains=ALLBUT,taskpaperProject
-syn region taskpaperProject start=/^\z(\s*\)[^-].\+:/ end=/^\ze\S\|^\zs$/ transparent fold contains=ALL
+syn match taskpaperComment	/^.*$/ contains=taskpaperContext
+syn match taskpaperProject	/^.\+:\(\s\+@[^ \t(]\+\(([^)]*)\)\?\)*$/ contains=taskpaperContext
+syn match taskpaperListItem	/^\t*-\s\+/
+syn match taskpaperContext	/\s\zs@[^ \t(]\+\(([^)]*)\)\?/
+syn match taskpaperDone		/^.*\s@done\(\(\s\|([^)]*)\).*\)\?$/
+syn match taskpaperCancelled	/^.*\s@cancelled\(\(\s\|([^)]*)\).*\)\?$/
 
 syn sync fromstart
 

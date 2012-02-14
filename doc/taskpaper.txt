@@ -29,13 +29,13 @@ Installation
 It should be safe to simply unpack the package into your .vim directory.
 It contains the following files:
 
-    after/plugin/taskpaper.vim
-    doc/taskpaper.txt
+    autoload/taskpaper.vim
     doc/example.taskpaper
+    doc/taskpaper.txt
     doc/taskpaper_licence.txt
+    ftdetect/taskpaper.vim
     ftplugin/taskpaper.vim
     syntax/taskpaper.vim
-    ftdetect/taskpaper.vim
 
 To access this help file from within Vim you must first update your help 
 tags:
@@ -77,10 +77,17 @@ The plugin defines some new mappings:
 
     \td     Mark task as done
     \tx     Mark task as cancelled
-    \tc     Show all tasks with context under cursor
-    \tp     Fold all top-level projects
-    \ta     Show all projects and tasks
-    \tt     Toggle add/removing a context from a task
+    \tt     Mark task as today
+    \tD     Archive @done items
+    \tX     Show tasks marked as cancelled
+    \tT     Show tasks marked as today
+    \t/     Search for items including keyword
+    \ts     Search for items including tag
+    \tp     Fold all projects
+    \t.     Fold all notes
+    \tP     Focus on the current project
+    \tj     Go to next project
+    \tk     Go to previous project
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.

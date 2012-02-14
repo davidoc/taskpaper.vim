@@ -9,141 +9,79 @@ if exists("b:loaded_task_paper")
 endif
 let b:loaded_task_paper = 1
 
-" Define a default date format
-if !exists('task_paper_date_format') | let task_paper_date_format = "%Y-%m-%d" | endif
+let s:save_cpo = &cpo
+set cpo&vim
 
-"add '@' to keyword character set so that we can complete contexts as keywords
+" Define a default date format
+if !exists('g:task_paper_date_format')
+    let g:task_paper_date_format = "%Y-%m-%d"
+endif
+
+" Define a default archive project name
+if !exists('g:task_paper_archive_project')
+    let g:task_paper_archive_project = "Archive"
+endif
+
+" Add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
-"set default folding: by project (syntax), open (up to 99 levels), disabled 
-setlocal foldmethod=syntax
-setlocal foldlevel=99
-setlocal nofoldenable
+" Tab character has special meaning on TaskPaper
+setlocal noexpandtab
 
-"show tasks from context under the cursor
-function! s:ShowContext()
-    let s:wordUnderCursor = expand("<cword>")
-    if(s:wordUnderCursor =~ "@\k*")
-        let @/ = "\\<".s:wordUnderCursor."\\>"
-        "adapted from http://vim.sourceforge.net/tips/tip.php?tip_id=282
-        setlocal foldexpr=(getline(v:lnum)=~@/)?0:1
-        setlocal foldmethod=expr foldlevel=0 foldcolumn=1 foldminlines=0
-        setlocal foldenable
-    else
-        echo "'" s:wordUnderCursor "' is not a context."    
-    endif
-endfunction
-
-function! s:ShowAll()
-    setlocal foldmethod=syntax
-    %foldopen!
-    setlocal nofoldenable
-endfunction  
-
-function! s:FoldAllProjects()
-    setlocal foldmethod=syntax
-    setlocal foldenable
-    %foldclose! 
-endfunction
-
-" show project from context under cursor
-function! s:ShowProject()
-    let project  = getline('.')
-    let position = getpos('.')
-    let synlist  = []
-    for id in synstack(position[1], position[2])
-        call add(synlist, synIDattr(id, "name"))
-    endfor
-    if project =~ ':$' ||
-                \ index(synlist, 'taskpaperProject') != -1
-        setl foldenable
-        setl foldmethod=syntax
-        %foldclose!
-        exec 'normal zO'
-    else
-        echomsg project.' is not a project'
-    endif
-endfunction
-
-" toggle @done context tag on a task
-function! s:ToggleDone()
-
-    let line = getline(".")
-    if (line =~ '^\s*- ') || (line =~ '^\s*[^\-].\+:')
-        let repl = line
-        if (line =~ '@done')
-            let repl = substitute(line, ' @done\%((.\{-})\)\=\(.*\)\=$', '\1', 'g')
-            echomsg "undone!"
-        else
-            let today = strftime(g:task_paper_date_format, localtime())
-            let done_str = " @done(" . today . ")"
-            let repl = substitute(line, "$", done_str, "g")
-            echomsg "done!"
-        endif
-        call setline(".", repl)
-    else 
-        echomsg "not a task."
-    endif
-
-endfunction
-
-" toggle @cancelled context tag on a task
-function! s:ToggleCancelled()
-
-    let line = getline(".")
-    if (line =~ '^\s*- ')
-        let repl = line
-        if (line =~ '@cancelled')
-            let repl = substitute(line, "@cancelled\(.*\)", "", "g")
-            echo "uncancelled!"
-        else
-            let today = strftime(g:task_paper_date_format, localtime())
-            let cancelled_str = " @cancelled(" . today . ")"
-            let repl = substitute(line, "$", cancelled_str, "g")
-            echo "cancelled!"
-        endif
-        call setline(".", repl)
-    else 
-        echo "not a task."
-    endif
-endfunction
-
-" substitute a tag for a line number
-function! s:SubTag(tag, line)
-  let line = getline(a:line)
-  if line =~ '^\s*- '
-    if line =~ a:tag
-      let repl = substitute(line, ' @'.a:tag.'\(.*\)$', '\1', 'g')
-    else
-      let repl = substitute(line, '$', ' @'.a:tag, 'g')
-    endif
-    call setline(a:line, repl)
-  endif
-endfunction
-
-" custom toggle @ tag
-function! s:ToggleTag(tag, line1, line2)
-  for l in range(a:line1, a:line2)
-    call s:SubTag(a:tag, l)
-  endfor
-endfunction
-command! -nargs=1 -range -buffer Tag
-      \ :exec 'let s:c = getpos(".")'
-      \| call s:ToggleTag(<f-args>, <line1>, <line2>)
-      \| call setpos('.', s:c)
+" Change 'comments' to continue to write a task item.
+setlocal comments=b:-
 
 " Set up mappings
-noremap <script> <Plug>ToggleDone      :call <SID>ToggleDone()<CR>
-noremap <script> <Plug>ToggleCancelled :call <SID>ToggleCancelled()<CR>
-noremap <script> <Plug>ShowContext     :call <SID>ShowContext()<CR>
-noremap <script> <Plug>ShowAll         :call <SID>ShowAll()<CR>
-noremap <script> <Plug>ShowProject     :call <SID>ShowProject()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperFoldProjects
+\       :<C-u>call taskpaper#fold_projects()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperFoldNotes
+\       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
+nnoremap <unique> <script> <Plug>TaskPaperFocusProject
+\       :<C-u>call taskpaper#fold_projects()<CR>zO
 
-map <buffer> <silent> <Leader>td <Plug>ToggleDone
-map <buffer> <silent> <Leader>tx <Plug>ToggleCancelled
-map <buffer> <silent> <Leader>tc <Plug>ShowContext
-map <buffer> <silent> <Leader>ta <Plug>ShowAll
-map <buffer> <silent> <Leader>tp <Plug>ShowProject
+nnoremap <unique> <script> <Plug>TaskPaperSearch
+\       :<C-u>call taskpaper#search()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperSearchTag
+\       :<C-u>call taskpaper#search_tag()<CR>
 
-nno <buffer> <silent> <Leader>tt :Tag<Space>
-xno <buffer> <silent> <Leader>tt :Tag<Space>
+nnoremap <unique> <script> <Plug>TaskPaperNextProject
+\       :<C-u>call taskpaper#next_project()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperPreviousProject
+\       :<C-u>call taskpaper#previous_project()<CR>
+
+nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
+\       :<C-u>call taskpaper#archive_done()<CR>
+nnoremap <unique> <script> <Plug>TaskPaperShowToday
+\       :<C-u>call taskpaper#search_tag('today')<CR>
+nnoremap <unique> <script> <Plug>TaskPaperShowCancelled
+\       :<C-u>call taskpaper#search_tag('cancelled')<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleCancelled
+\       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleDone
+\       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
+nnoremap <unique> <script> <Plug>TaskPaperToggleToday
+\       :call taskpaper#toggle_tag('today', '')<CR>
+
+nnoremap <unique> <script> <Plug>TaskPaperNewline
+\       o<C-r>=taskpaper#newline()<CR>
+inoremap <unique> <script> <Plug>TaskPaperNewline
+\       <CR><C-r>=taskpaper#newline()<CR>
+
+nmap <buffer> <silent> <Leader>tp <Plug>TaskPaperFoldProjects
+nmap <buffer> <silent> <Leader>t. <Plug>TaskPaperFoldNotes
+nmap <buffer> <silent> <Leader>tP <Plug>TaskPaperFocusProject
+
+nmap <buffer> <silent> <Leader>t/ <Plug>TaskPaperSearch
+nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearchTag
+
+nmap <buffer> <silent> <Leader>tj <Plug>TaskPaperNextProject
+nmap <buffer> <silent> <Leader>tk <Plug>TaskPaperPreviousProject
+
+nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
+nmap <buffer> <silent> <Leader>tT <Plug>TaskPaperShowToday
+nmap <buffer> <silent> <Leader>tX <Plug>TaskPaperShowCancelled
+nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
+nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
+nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
+
+let &cpo = s:save_cpo

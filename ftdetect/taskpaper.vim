@@ -5,7 +5,5 @@
 " Last Change:  2011-03-28
 "
 augroup taskpaper
-     autocmd!
-     au BufRead,BufNewFile *.taskpaper   setfiletype taskpaper
-     au FileType taskpaper setlocal noexpandtab
+     au! BufRead,BufNewFile *.taskpaper   setfiletype taskpaper
 augroup END
