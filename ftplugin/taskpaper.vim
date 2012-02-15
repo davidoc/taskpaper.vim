@@ -84,4 +84,11 @@ nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
 nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
 nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
 
+if mapcheck("o", "n") == ''
+    nmap <buffer> o <Plug>TaskPaperNewline
+endif
+if mapcheck("\<CR>", "i") == ''
+    imap <buffer> <CR> <Plug>TaskPaperNewline
+endif
+
 let &cpo = s:save_cpo
