@@ -49,22 +49,15 @@ endfunction
 
 function! taskpaper#toggle_tag(tag, ...)
     if !taskpaper#delete_tag(a:tag, '')
-        if a:0 > 0
-            call taskpaper#add_tag(a:tag, a:1)
-        else
-            call taskpaper#add_tag(a:tag)
-        endif
+        let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
+        call call("taskpaper#add_tag", args)
     endif
 endfunction
 
 function! taskpaper#update_tag(tag, ...)
     call taskpaper#delete_tag(a:tag, '')
-
-    if a:0 > 0
-        call taskpaper#add_tag(a:tag, a:1)
-    else
-        call taskpaper#add_tag(a:tag)
-    endif
+    let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
+    call call("taskpaper#add_tag", args)
 endfunction
 
 function! taskpaper#date()
@@ -85,6 +78,10 @@ function! s:search_project(project, mindepth, begin, end)
 endfunction
 
 function! taskpaper#search_project(projects)
+    if empty(a:projects)
+        return 0
+    endif
+
     let save_pos = getpos('.')
 
     let begin = 1
@@ -102,14 +99,14 @@ function! taskpaper#search_project(projects)
         let depth = len(matchstr(getline('.'), '^\t*'))
     endfor
 
+    call cursor(begin, 1)
+    normal! ^
+
     return begin
 endfunction
 
 function! taskpaper#search_end_of_item(...)
     let lnum = a:0 > 0 ? a:1 : line('.')
-
-    let save_fen = &l:foldenable
-    setlocal nofoldenable
 
     let depth = len(matchstr(getline(lnum), '^\t*'))
 
@@ -129,7 +126,8 @@ function! taskpaper#search_end_of_item(...)
         let lnum += 1
     endwhile
 
-    let &l:foldenable = save_fen
+    call cursor(end, 0)
+    normal! ^
 
     return end
 endfunction
@@ -176,6 +174,7 @@ function! taskpaper#put(...)
     setlocal nofoldenable
 
     if !empty(projects) && !taskpaper#search_project(projects)
+        let &l:foldenable = save_fen
         return 0
     endif
 
@@ -196,17 +195,20 @@ endfunction
 
 function! taskpaper#move(projects, ...)
     let lnum = a:0 > 0 ? a:1 : line('.')
-    let reg = 'a'
 
     let save_fen = &l:foldenable
-    let save_reg = [getreg(reg), getregtype(reg)]
     setlocal nofoldenable
 
-    let nlines = taskpaper#delete(lnum, reg, 1)
-    if taskpaper#put(a:projects, reg, 1) == 0
-        normal! u
+    if !taskpaper#search_project(a:projects)
+        let &l:foldenable = save_fen
         return 0
     endif
+
+    let reg = 'a'
+    let save_reg = [getreg(reg), getregtype(reg)]
+
+    let nlines = taskpaper#delete(lnum, reg, 1)
+    call taskpaper#put(a:projects, reg, 1)
 
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
