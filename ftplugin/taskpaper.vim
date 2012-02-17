@@ -37,7 +37,7 @@ nnoremap <unique> <script> <Plug>TaskPaperFoldProjects
 nnoremap <unique> <script> <Plug>TaskPaperFoldNotes
 \       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
 nnoremap <unique> <script> <Plug>TaskPaperFocusProject
-\       :<C-u>call taskpaper#fold_projects()<CR>zO
+\       :<C-u>call taskpaper#fold_projects()<CR>99zo
 
 nnoremap <unique> <script> <Plug>TaskPaperSearch
 \       :<C-u>call taskpaper#search()<CR>
