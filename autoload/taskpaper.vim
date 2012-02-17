@@ -64,6 +64,51 @@ function! taskpaper#date()
     return strftime(g:task_paper_date_format, localtime())
 endfunction
 
+function! taskpaper#complete_project(lead, cmdline, pos)
+    let lnum = 1
+    let list = []
+    let stack = ['']
+    let depth = 0
+
+    while lnum <= line('$')
+        let line = getline(lnum)
+        let ml = matchlist(line, '\v\C^\t*(.+):(\s+\@[^ \t(]+(\([^)]*\))?)*$')
+
+        if !empty(ml)
+            let d = len(matchstr(line, '^\t*'))
+
+            while d < depth
+                call remove(stack, -1)
+                let depth -= 1
+            endwhile
+
+            while d > depth
+                call add(stack, '')
+                let depth += 1
+            endwhile
+
+            let stack[d] = ml[1]
+
+            let candidate = join(stack, ':')
+            if candidate =~ '^\V' . a:lead
+                call add(list, join(stack, ':'))
+            endif
+        endif
+
+        let lnum += 1
+    endwhile
+
+    return list
+endfunction
+
+function! taskpaper#go_to_project()
+    let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
+
+    if res != ''
+        call taskpaper#search_project(split(res, ':'))
+    endif
+endfunction
+
 function! taskpaper#next_project()
     call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'w')
 endfunction
@@ -72,9 +117,9 @@ function! taskpaper#previous_project()
     call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'bw')
 endfunction
 
-function! s:search_project(project, mindepth, begin, end)
+function! s:search_project(project, depth, begin, end)
     call cursor(a:begin, 1)
-    return search('\v^\t{' . a:mindepth . ',}\V' . a:project . ':', 'c', a:end)
+    return search('\v^\t{' . a:depth . '}\V' . a:project . ':', 'c', a:end)
 endfunction
 
 function! taskpaper#search_project(projects)
@@ -96,7 +141,7 @@ function! taskpaper#search_project(projects)
 
         let begin = line('.')
         let end = taskpaper#search_end_of_item(begin)
-        let depth = len(matchstr(getline('.'), '^\t*'))
+        let depth += 1
     endfor
 
     call cursor(begin, 1)

@@ -45,6 +45,8 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nnoremap <silent> <buffer> <Plug>TaskPaperSearchTag
     \       :<C-u>call taskpaper#search_tag()<CR>
 
+    nnoremap <silent> <buffer> <Plug>TaskPaperGoToProject
+    \       :<C-u>call taskpaper#go_to_project()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperNextProject
     \       :<C-u>call taskpaper#next_project()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperPreviousProject
@@ -75,6 +77,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>t/ <Plug>TaskPaperSearch
     nmap <buffer> <Leader>ts <Plug>TaskPaperSearchTag
 
+    nmap <buffer> <Leader>tg <Plug>TaskPaperGoToProject
     nmap <buffer> <Leader>tj <Plug>TaskPaperNextProject
     nmap <buffer> <Leader>tk <Plug>TaskPaperPreviousProject
 

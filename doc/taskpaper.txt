@@ -87,6 +87,7 @@ The plugin defines some new mappings:
     \tP     Focus on the current project
     \tj     Go to next project
     \tk     Go to previous project
+    \tg     Go to specified project
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
@@ -105,6 +106,10 @@ projects.
 
 To show all projects and tasks use the `zR` command. This disables folding so
 that the entire file is expanded.
+
+To go to next or previous project use the `\tj` command or `\tk` command.  To
+go to a project you specify use the `\tg` command.  You can complete project
+names with <Tab> on prompt.
 
 Configuration
 ==============
