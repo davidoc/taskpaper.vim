@@ -110,11 +110,11 @@ function! taskpaper#go_to_project()
 endfunction
 
 function! taskpaper#next_project()
-    call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'w')
+    return search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'w')
 endfunction
 
 function! taskpaper#previous_project()
-    call search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'bw')
+    return search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'bw')
 endfunction
 
 function! s:search_project(project, depth, begin, end)
@@ -152,6 +152,7 @@ endfunction
 
 function! taskpaper#search_end_of_item(...)
     let lnum = a:0 > 0 ? a:1 : line('.')
+    let flags = a:0 > 1 ? a:2 : ''
 
     let depth = len(matchstr(getline(lnum), '^\t*'))
 
@@ -171,8 +172,10 @@ function! taskpaper#search_end_of_item(...)
         let lnum += 1
     endwhile
 
-    call cursor(end, 0)
-    normal! ^
+    if flags !~# 'n'
+        call cursor(end, 0)
+        normal! ^
+    endif
 
     return end
 endfunction
@@ -379,6 +382,48 @@ function! taskpaper#search(...)
     endif
 
     setlocal foldexpr=taskpaper#fold(v:lnum,pat)
+    setlocal foldminlines=0 foldtext=''
+    setlocal foldmethod=expr foldlevel=0 foldenable
+endfunction
+
+function! taskpaper#fold_except_range(lnum, begin, end)
+    if a:lnum > a:end
+        return 1
+    elseif a:lnum >= a:begin
+        return 0
+    elseif synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
+        return 1
+    elseif level != -1
+        return level
+    endif
+
+    if a:end <= taskpaper#search_end_of_item(a:lnum, 'n')
+        return 0
+    endif
+
+    return 1
+endfunction
+
+function! taskpaper#focus_project()
+    let pos = getpos('.')
+
+    normal! $
+    let begin = taskpaper#previous_project()
+    if begin == 0
+        call setpos('.', pos)
+        return
+    endif
+
+    let end = taskpaper#search_end_of_item(begin, 'n')
+
+    " Go to the top level project
+    while taskpaper#previous_project()
+        if getline('.') =~ '^[^\t]'
+            break
+        endif
+    endwhile
+
+    setlocal foldexpr=taskpaper#fold_except_range(v:lnum,begin,end)
     setlocal foldminlines=0 foldtext=''
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction

@@ -38,9 +38,9 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nnoremap <silent> <buffer> <Plug>TaskPaperFoldNotes
     \       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperFocusProject
-    \       :<C-u>call taskpaper#fold_projects()<CR>99zo
+    \       :<C-u>call taskpaper#focus_project()<CR>
 
-    nnoremap <silent> <buffer> <Plug>TaskPaperSearch
+    nnoremap <silent> <buffer> <Plug>TaskPaperSearchKeyword
     \       :<C-u>call taskpaper#search()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperSearchTag
     \       :<C-u>call taskpaper#search_tag()<CR>
@@ -74,7 +74,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>t. <Plug>TaskPaperFoldNotes
     nmap <buffer> <Leader>tP <Plug>TaskPaperFocusProject
 
-    nmap <buffer> <Leader>t/ <Plug>TaskPaperSearch
+    nmap <buffer> <Leader>t/ <Plug>TaskPaperSearchKeyword
     nmap <buffer> <Leader>ts <Plug>TaskPaperSearchTag
 
     nmap <buffer> <Leader>tg <Plug>TaskPaperGoToProject
