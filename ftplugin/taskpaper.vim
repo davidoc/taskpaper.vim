@@ -53,7 +53,7 @@ function! s:ToggleDone()
     if (line =~ '^\s*- ')
         let repl = line
         if (line =~ '@done')
-            let repl = substitute(line, "@done\(.*\)", "", "g")
+            let repl = substitute(line, ' *@done\(([^)]*)\|\([ @]\|\_$\)\@=\)', "", "g")
             echo "undone!"
         else
             let today = strftime(g:task_paper_date_format, localtime())
@@ -75,7 +75,7 @@ function! s:ToggleCancelled()
     if (line =~ '^\s*- ')
         let repl = line
         if (line =~ '@cancelled')
-            let repl = substitute(line, "@cancelled\(.*\)", "", "g")
+            let repl = substitute(line, ' *@cancelled\(([^)]*)\|\([ @]\|\_$\)\@=\)', "", "g")
             echo "uncancelled!"
         else
             let today = strftime(g:task_paper_date_format, localtime())
