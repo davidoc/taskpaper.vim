@@ -90,7 +90,7 @@ function! taskpaper#complete_project(lead, cmdline, pos)
             let stack[d] = ml[1]
 
             let candidate = join(stack, ':')
-            if candidate =~ '^\V' . a:lead
+            if candidate =~ '^' . a:lead
                 call add(list, join(stack, ':'))
             endif
         endif
