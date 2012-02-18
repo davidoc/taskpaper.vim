@@ -2,7 +2,7 @@
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-8th February 2012
+18th February 2012
 
 Introduction
 =============
@@ -177,6 +177,25 @@ or patches to improve TaskPaper.vim:
  * Morgan Sutherland (https://github.com/msutherl)
    - Use <Leader> rather than <LocalLeader>
    - Start new task after <CR>
+ * Matt Sacks (https://github.com/mattsa)
+   - Optional (date) syntax for @done tasks
+   - Add Tag command for add/removing tag
+   - Fix lagging space after removing a tag
+   - Better syntax 
+ * Anyakichi (https://github.com/anyakichi)
+   - Add useful functions for users to define his own mappings easily
+    - Add, delete, toggle, and update tags
+    - Go previous or next project
+    - Move projects, tasks and notes to another project
+    - Search for keywords or tags with regexp
+   - More compatible with HogBaySoftware's TaskPaper
+    - Tag to projects and notes not only tasks
+    - Shortcut to @today tag
+    - Archiving done support
+   - Multi-level folding of projects work perfectly
+   - Add a new feature to fold only notes
+
+
 
 Contact
 ========
