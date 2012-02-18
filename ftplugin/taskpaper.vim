@@ -32,39 +32,39 @@ setlocal noexpandtab
 setlocal comments=b:-
 
 " Set up mappings
-nnoremap <unique> <script> <Plug>TaskPaperFoldProjects
+nnoremap <script> <Plug>TaskPaperFoldProjects
 \       :<C-u>call taskpaper#fold_projects()<CR>
-nnoremap <unique> <script> <Plug>TaskPaperFoldNotes
+nnoremap <script> <Plug>TaskPaperFoldNotes
 \       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
-nnoremap <unique> <script> <Plug>TaskPaperFocusProject
+nnoremap <script> <Plug>TaskPaperFocusProject
 \       :<C-u>call taskpaper#fold_projects()<CR>zO
 
-nnoremap <unique> <script> <Plug>TaskPaperSearch
+nnoremap <script> <Plug>TaskPaperSearch
 \       :<C-u>call taskpaper#search()<CR>
-nnoremap <unique> <script> <Plug>TaskPaperSearchTag
+nnoremap <script> <Plug>TaskPaperSearchTag
 \       :<C-u>call taskpaper#search_tag()<CR>
 
-nnoremap <unique> <script> <Plug>TaskPaperNextProject
+nnoremap <script> <Plug>TaskPaperNextProject
 \       :<C-u>call taskpaper#next_project()<CR>
-nnoremap <unique> <script> <Plug>TaskPaperPreviousProject
+nnoremap <script> <Plug>TaskPaperPreviousProject
 \       :<C-u>call taskpaper#previous_project()<CR>
 
-nnoremap <unique> <script> <Plug>TaskPaperArchiveDone
+nnoremap <script> <Plug>TaskPaperArchiveDone
 \       :<C-u>call taskpaper#archive_done()<CR>
-nnoremap <unique> <script> <Plug>TaskPaperShowToday
+nnoremap <script> <Plug>TaskPaperShowToday
 \       :<C-u>call taskpaper#search_tag('today')<CR>
-nnoremap <unique> <script> <Plug>TaskPaperShowCancelled
+nnoremap <script> <Plug>TaskPaperShowCancelled
 \       :<C-u>call taskpaper#search_tag('cancelled')<CR>
-nnoremap <unique> <script> <Plug>TaskPaperToggleCancelled
+nnoremap <script> <Plug>TaskPaperToggleCancelled
 \       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
-nnoremap <unique> <script> <Plug>TaskPaperToggleDone
+nnoremap <script> <Plug>TaskPaperToggleDone
 \       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
-nnoremap <unique> <script> <Plug>TaskPaperToggleToday
+nnoremap <script> <Plug>TaskPaperToggleToday
 \       :call taskpaper#toggle_tag('today', '')<CR>
 
-nnoremap <unique> <script> <Plug>TaskPaperNewline
+nnoremap <script> <Plug>TaskPaperNewline
 \       o<C-r>=taskpaper#newline()<CR>
-inoremap <unique> <script> <Plug>TaskPaperNewline
+inoremap <script> <Plug>TaskPaperNewline
 \       <CR><C-r>=taskpaper#newline()<CR>
 
 nmap <buffer> <silent> <Leader>tp <Plug>TaskPaperFoldProjects
