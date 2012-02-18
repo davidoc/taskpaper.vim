@@ -52,10 +52,9 @@ Syntax
 
 The syntax file highlights project headings and task contexts (tags), and
 "greys out" completed tasks. The exact style of the displayed file depends
-on your Vim colour scheme. 
+on your Vim colour scheme.
 
-A project heading is a piece of text ending in a colon.  Top-level projects 
-can be folded using the "syntax" foldmethod.
+A project heading is a piece of text ending in a colon.
 
 A task is a line beginning with a hyphen '-' and can have zero or more
 context tags.
@@ -68,12 +67,12 @@ File-type Plugin
 =================
 
 The file-type plugin tries to make editing TaskPaper files in Vim more
-comfortable. 
+comfortable.
 
 Vim can complete context names after the '@' using the keyword completion
 commands (e.g. Ctrl-X Ctrl-N).
 
-The plugin defines some new mappings: 
+The plugin defines some new mappings:
 
     \td     Mark task as done
     \tx     Mark task as cancelled
@@ -88,6 +87,7 @@ The plugin defines some new mappings:
     \tP     Focus on the current project
     \tj     Go to next project
     \tk     Go to previous project
+    \tg     Go to specified project
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
@@ -95,17 +95,21 @@ then its value should be used instead of `\` in the mappings.
 Marking a task as done will add the "@done" context tag to the end of the
 task, and it will be greyed out by the syntax file.
 
-To show all tasks with a particular context tag, move the cursor over the
-desired context tag (e.g. using movement or search commands) and then use
-the `\tc` command. This will fold all the irrelevant tasks leaving only the
-tasks in the current context visible.
+To show all tasks with a particular context tag, type `\ts` and a tag name to
+search.  If you use the `\ts` command over the desired context tag, the tag
+name is set as default value.  This will fold all the irrelevant tasks leaving
+only the tasks in the current context visible.
 
 To fold all top-level projects leaving only the headings visible use the `\tp`
 command. Standard fold commands can be used to open (`zo`) and close (`zc`)
 individual projects.
 
-To show all projects and tasks use the `\ta` command. This disables folding so
+To show all projects and tasks use the `zR` command. This disables folding so
 that the entire file is expanded.
+
+To go to next or previous project use the `\tj` command or `\tk` command.  To
+go to a project you specify use the `\tg` command.  You can complete project
+names with <Tab> on prompt.
 
 Configuration
 ==============
@@ -118,11 +122,76 @@ For example, to include the date and time in ISO8601 format:
 
     let g:task_paper_date_format = "%Y-%m-%dT%H:%M:%S%z"
 
+To change the default archive project name, define the
+`task_paper_archive_project` variable.  The default value is "Archive".
+
+    let g:task_paper_archive_project = "Archive"
+
 File-type Detection
 ====================
 
 This package also contains a script to automatically use the TaskPaper file
 type for all files with the ".taskpaper" extension.
+
+Customize
+==========
+
+You can create your own shortcut for tagging.  To define your own shortcut,
+write settings in ~/.vim/ftplugin/taskpaper.vim or ~/.vimrc.  If you use the
+.vimrc file, define settings like:
+
+    function! s:taskpaper_setup()
+	" Your settings
+	nnoremap <buffer> <silent> <Leader>tn
+	\    :<C-u>call taskpaper#toggle_tag('next', '')<CR>
+    endfunction
+
+    augroup vimrc-taskpaper
+	autocmd!
+	autocmd FileType taskpaper s:taskpaper_setup()
+    augroup END
+
+To add a tag without argument:
+
+    nnoremap <buffer> <silent> <Leader>tn
+    \    :<C-u>call taskpaper#add_tag('next', '')<CR>
+
+To delete a tag:
+
+    nnoremap <buffer> <silent> <Leader>tN
+    \    :<C-u>call taskpaper#delete_tag('next', '')<CR>
+
+To toggle a tag:
+
+    nnoremap <buffer> <silent> <Leader>tn
+    \    :<C-u>call taskpaper#toggle_tag('next', '')<CR>
+
+To add a tag with an argument:
+
+    nnoremap <buffer> <silent> <Leader>tq
+    \    :<C-u>call taskpaper#add_tag('priority')<CR>
+
+You can specify the priority value on prompt.
+
+To delete the priority tag with any argument:
+
+    nnoremap <buffer> <silent> <Leader>tQ
+    \    :<C-u>call taskpaper#delete_tag('priority', '')<CR>
+
+To delete only the level 1 of priority tag:
+
+    nnoremap <buffer> <silent> <Leader>tQ
+    \    :<C-u>call taskpaper#delete_tag('priority', '1')<CR>
+
+To toggle a tag with an argument:
+
+    nnoremap <buffer> <silent> <Leader>tq
+    \    :<C-u>call taskpaper#toggle_tag('priority')<CR>
+
+To update a tag (not delete if the tag exists):
+
+    nnoremap <buffer> <silent> <Leader>tq
+    \    :<C-u>call taskpaper#update_tag('priority')<CR>
 
 Licence
 ========

@@ -2,12 +2,12 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2011-09-28
+" Last Change:  2012-02-18
 
-if exists("b:loaded_task_paper")
+if exists("b:did_ftplugin")
     finish
 endif
-let b:loaded_task_paper = 1
+let b:did_ftplugin = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -32,56 +32,68 @@ setlocal noexpandtab
 setlocal comments=b:-
 
 " Set up mappings
-nnoremap <script> <Plug>TaskPaperFoldProjects
-\       :<C-u>call taskpaper#fold_projects()<CR>
-nnoremap <script> <Plug>TaskPaperFoldNotes
-\       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
-nnoremap <script> <Plug>TaskPaperFocusProject
-\       :<C-u>call taskpaper#fold_projects()<CR>zO
+if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
+    nnoremap <silent> <buffer> <Plug>TaskPaperFoldProjects
+    \       :<C-u>call taskpaper#fold_projects()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperFoldNotes
+    \       :<C-u>call taskpaper#search('\v^(\s*\|\t+-\s+.*\|.+:)$')<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperFocusProject
+    \       :<C-u>call taskpaper#focus_project()<CR>
 
-nnoremap <script> <Plug>TaskPaperSearch
-\       :<C-u>call taskpaper#search()<CR>
-nnoremap <script> <Plug>TaskPaperSearchTag
-\       :<C-u>call taskpaper#search_tag()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperSearchKeyword
+    \       :<C-u>call taskpaper#search()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperSearchTag
+    \       :<C-u>call taskpaper#search_tag()<CR>
 
-nnoremap <script> <Plug>TaskPaperNextProject
-\       :<C-u>call taskpaper#next_project()<CR>
-nnoremap <script> <Plug>TaskPaperPreviousProject
-\       :<C-u>call taskpaper#previous_project()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperGoToProject
+    \       :<C-u>call taskpaper#go_to_project()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperNextProject
+    \       :<C-u>call taskpaper#next_project()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperPreviousProject
+    \       :<C-u>call taskpaper#previous_project()<CR>
 
-nnoremap <script> <Plug>TaskPaperArchiveDone
-\       :<C-u>call taskpaper#archive_done()<CR>
-nnoremap <script> <Plug>TaskPaperShowToday
-\       :<C-u>call taskpaper#search_tag('today')<CR>
-nnoremap <script> <Plug>TaskPaperShowCancelled
-\       :<C-u>call taskpaper#search_tag('cancelled')<CR>
-nnoremap <script> <Plug>TaskPaperToggleCancelled
-\       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
-nnoremap <script> <Plug>TaskPaperToggleDone
-\       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
-nnoremap <script> <Plug>TaskPaperToggleToday
-\       :call taskpaper#toggle_tag('today', '')<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperArchiveDone
+    \       :<C-u>call taskpaper#archive_done()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperShowToday
+    \       :<C-u>call taskpaper#search_tag('today')<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperShowCancelled
+    \       :<C-u>call taskpaper#search_tag('cancelled')<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperToggleCancelled
+    \       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperToggleDone
+    \       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperToggleToday
+    \       :call taskpaper#toggle_tag('today', '')<CR>
 
-nnoremap <script> <Plug>TaskPaperNewline
-\       o<C-r>=taskpaper#newline()<CR>
-inoremap <script> <Plug>TaskPaperNewline
-\       <CR><C-r>=taskpaper#newline()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperNewline
+    \       o<C-r>=taskpaper#newline()<CR>
+    inoremap <silent> <buffer> <Plug>TaskPaperNewline
+    \       <CR><C-r>=taskpaper#newline()<CR>
 
-nmap <buffer> <silent> <Leader>tp <Plug>TaskPaperFoldProjects
-nmap <buffer> <silent> <Leader>t. <Plug>TaskPaperFoldNotes
-nmap <buffer> <silent> <Leader>tP <Plug>TaskPaperFocusProject
+    nmap <buffer> <Leader>tp <Plug>TaskPaperFoldProjects
+    nmap <buffer> <Leader>t. <Plug>TaskPaperFoldNotes
+    nmap <buffer> <Leader>tP <Plug>TaskPaperFocusProject
 
-nmap <buffer> <silent> <Leader>t/ <Plug>TaskPaperSearch
-nmap <buffer> <silent> <Leader>ts <Plug>TaskPaperSearchTag
+    nmap <buffer> <Leader>t/ <Plug>TaskPaperSearchKeyword
+    nmap <buffer> <Leader>ts <Plug>TaskPaperSearchTag
 
-nmap <buffer> <silent> <Leader>tj <Plug>TaskPaperNextProject
-nmap <buffer> <silent> <Leader>tk <Plug>TaskPaperPreviousProject
+    nmap <buffer> <Leader>tg <Plug>TaskPaperGoToProject
+    nmap <buffer> <Leader>tj <Plug>TaskPaperNextProject
+    nmap <buffer> <Leader>tk <Plug>TaskPaperPreviousProject
 
-nmap <buffer> <silent> <Leader>tD <Plug>TaskPaperArchiveDone
-nmap <buffer> <silent> <Leader>tT <Plug>TaskPaperShowToday
-nmap <buffer> <silent> <Leader>tX <Plug>TaskPaperShowCancelled
-nmap <buffer> <silent> <Leader>td <Plug>TaskPaperToggleDone
-nmap <buffer> <silent> <Leader>tt <Plug>TaskPaperToggleToday
-nmap <buffer> <silent> <Leader>tx <Plug>TaskPaperToggleCancelled
+    nmap <buffer> <Leader>tD <Plug>TaskPaperArchiveDone
+    nmap <buffer> <Leader>tT <Plug>TaskPaperShowToday
+    nmap <buffer> <Leader>tX <Plug>TaskPaperShowCancelled
+    nmap <buffer> <Leader>td <Plug>TaskPaperToggleDone
+    nmap <buffer> <Leader>tt <Plug>TaskPaperToggleToday
+    nmap <buffer> <Leader>tx <Plug>TaskPaperToggleCancelled
+
+    if mapcheck("o", "n") == ''
+        nmap <buffer> o <Plug>TaskPaperNewline
+    endif
+    if mapcheck("\<CR>", "i") == ''
+        imap <buffer> <CR> <Plug>TaskPaperNewline
+    endif
+endif
 
 let &cpo = s:save_cpo
