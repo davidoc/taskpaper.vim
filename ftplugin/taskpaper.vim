@@ -2,7 +2,7 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2012-02-18
+" Last Change:  2012-02-20
 
 if exists("b:did_ftplugin")
     finish
@@ -28,8 +28,12 @@ setlocal iskeyword+=@-@
 " Tab character has special meaning on TaskPaper
 setlocal noexpandtab
 
-" Change 'comments' to continue to write a task item.
+" Change 'comments' and 'formatoptions' to continue to write a task item
 setlocal comments=b:-
+setlocal fo-=c fo+=rol
+
+" Set 'autoindent' to maintain indent level
+setlocal autoindent
 
 " Set up mappings
 if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
