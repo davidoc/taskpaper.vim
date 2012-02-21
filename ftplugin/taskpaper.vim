@@ -91,7 +91,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     if mapcheck("o", "n") == ''
         nmap <buffer> o <Plug>TaskPaperNewline
     endif
-    if mapcheck("\<CR>", "i") == ''
+    if mapcheck('\<CR>', "i") == ''
         imap <buffer> <CR> <Plug>TaskPaperNewline
     endif
 endif
