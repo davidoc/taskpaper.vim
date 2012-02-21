@@ -148,7 +148,7 @@ write settings in ~/.vim/ftplugin/taskpaper.vim or ~/.vimrc.  If you use the
 
     augroup vimrc-taskpaper
 	autocmd!
-	autocmd FileType taskpaper s:taskpaper_setup()
+	autocmd FileType taskpaper call s:taskpaper_setup()
     augroup END
 
 To add a tag without argument:
