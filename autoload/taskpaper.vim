@@ -461,14 +461,16 @@ function! taskpaper#newline()
     let lnum = line('.')
     let line = getline('.')
 
-    if lnum == 1 || line !~ '^\s*$' ||
-    \  synIDattr(synID(lnum - 1, 1, 1), "name") != 'taskpaperProject'
+    if lnum == 1 || line !~ '^\s*$'
         return ''
     endif
 
     let pline = getline(lnum - 1)
     let depth = len(matchstr(pline, '^\t*'))
-    call setline(lnum, repeat("\t", depth + 1) . '- ')
+    if pline !~ '\s\+-.*'
+        let depth = depth + 1
+    endif
+    call setline(lnum, repeat("\t", depth) . '- ')
 
     return "\<End>"
 endfunction
