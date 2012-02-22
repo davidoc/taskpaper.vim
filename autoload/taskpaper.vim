@@ -264,6 +264,11 @@ function! taskpaper#move(projects, ...)
     return nlines
 endfunction
 
+function! taskpaper#move_to_project()
+    let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
+    call taskpaper#move(split(res, ':'))
+endfunction
+
 function! taskpaper#update_project()
     let indent = matchstr(getline("."), '^\t*')
     let depth = len(indent)

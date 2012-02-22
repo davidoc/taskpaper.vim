@@ -88,6 +88,7 @@ The plugin defines some new mappings:
     \tj     Go to next project
     \tk     Go to previous project
     \tg     Go to specified project
+    \tm     Move task to specified project
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
@@ -148,7 +149,7 @@ write settings in ~/.vim/ftplugin/taskpaper.vim or ~/.vimrc.  If you use the
 
     augroup vimrc-taskpaper
 	autocmd!
-	autocmd FileType taskpaper s:taskpaper_setup()
+	autocmd FileType taskpaper call s:taskpaper_setup()
     augroup END
 
 To add a tag without argument:
