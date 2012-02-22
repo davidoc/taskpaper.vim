@@ -260,13 +260,15 @@ function! taskpaper#move(projects, ...)
 
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
-
+        if g:task_paper_follow_move == 0
+            execute lnum
+        endif
     return nlines
 endfunction
 
 function! taskpaper#move_to_project()
-	let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
-	call taskpaper#move(split(res, ':'))
+    let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
+    call taskpaper#move(split(res, ':'))
 endfunction
 
 function! taskpaper#update_project()

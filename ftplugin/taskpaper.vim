@@ -22,6 +22,12 @@ if !exists('g:task_paper_archive_project')
     let g:task_paper_archive_project = "Archive"
 endif
 
+" When moving a task, should the cursor follow or stay in the same place
+" (default: follow)
+if !exists('g:task_paper_follow_move')
+    let g:task_paper_follow_move = 1 
+endif
+
 " Add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 
