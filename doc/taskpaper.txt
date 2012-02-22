@@ -88,6 +88,7 @@ The plugin defines some new mappings:
     \tj     Go to next project
     \tk     Go to previous project
     \tg     Go to specified project
+    \tm     Move task to specified project 
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
