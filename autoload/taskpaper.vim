@@ -59,6 +59,40 @@ function! taskpaper#toggle_tag(tag, ...)
     endif
 endfunction
 
+function! taskpaper#has_tag(tag)
+    let cur_line = getline(".")
+    let m = matchstr(cur_line, '@'.a:tag)
+    if m != ''
+        return 1
+    else
+        return 0
+endfunction
+
+function! taskpaper#cycle_tags(...)
+    let tags_index = 0
+    let tag_list = a:000
+    let tag_added = 0
+    for tag_name in tag_list
+        let tags_index = tags_index + 1
+        if tags_index == len(tag_list)
+            let tags_index = 0
+        endif
+        let has_tag = taskpaper#has_tag(tag_name)
+        if has_tag == 1
+            let tag_added = 1
+            call taskpaper#delete_tag(tag_name)
+            let new_tag = tag_list[tags_index]
+            if new_tag != ''
+                call taskpaper#add_tag(new_tag, '')
+            endif
+            break
+        endif
+    endfor
+    if tag_added == 0
+        call taskpaper#add_tag(tag_list[0], '')
+    endif
+endfunction
+
 function! taskpaper#update_tag(tag, ...)
     call taskpaper#delete_tag(a:tag, '')
     let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
