@@ -47,6 +47,11 @@ function! taskpaper#delete_tag(tag, ...)
     return s:add_delete_tag(a:tag, value, 0)
 endfunction
 
+function! taskpaper#swap_tag(oldtag, newtag)
+    call taskpaper#delete_tag(a:oldtag)
+    call taskpaper#add_tag(a:newtag, '')
+endfunction
+
 function! taskpaper#toggle_tag(tag, ...)
     if !taskpaper#delete_tag(a:tag, '')
         let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
