@@ -52,6 +52,15 @@ function! taskpaper#swap_tag(oldtag, newtag)
     call taskpaper#add_tag(a:newtag, '')
 endfunction
 
+function! taskpaper#swap_tags(oldtags, newtags)
+		for oldtag in a:oldtags
+			call taskpaper#delete_tag(oldtag)
+		endfor
+		for newtag in a:newtags
+			call taskpaper#add_tag(newtag, '')
+		endfor
+endfunction
+
 function! taskpaper#toggle_tag(tag, ...)
     if !taskpaper#delete_tag(a:tag, '')
         let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
