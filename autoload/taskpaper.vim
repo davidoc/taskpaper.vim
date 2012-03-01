@@ -53,12 +53,12 @@ function! taskpaper#swap_tag(oldtag, newtag)
 endfunction
 
 function! taskpaper#swap_tags(oldtags, newtags)
-		for oldtag in a:oldtags
-			call taskpaper#delete_tag(oldtag)
-		endfor
-		for newtag in a:newtags
-			call taskpaper#add_tag(newtag, '')
-		endfor
+    for oldtag in a:oldtags
+        call taskpaper#delete_tag(oldtag)
+    endfor
+    for newtag in a:newtags
+        call taskpaper#add_tag(newtag, '')
+    endfor
 endfunction
 
 function! taskpaper#toggle_tag(tag, ...)
@@ -402,11 +402,11 @@ function! taskpaper#archive_done()
     return deleted
 endfunction
 
-function! taskpaper#fold(lnum, pat)
+function! taskpaper#fold(lnum, pat, ipat)
     let line = getline(a:lnum)
     let level = foldlevel(a:lnum)
 
-    if line =~? a:pat
+    if line =~? a:pat && (a:ipat == '' || line !~? a:ipat)
         return 0
     elseif synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
         return 1
@@ -423,7 +423,7 @@ function! taskpaper#fold(lnum, pat)
             break
         endif
 
-        if line =~? a:pat
+        if line =~? a:pat && (a:ipat == '' || line !~? a:ipat)
             return 0
         endif
     endfor
@@ -432,11 +432,12 @@ endfunction
 
 function! taskpaper#search(...)
     let pat = a:0 > 0 ? a:1 : input('Search: ')
+    let ipat = a:0 > 1 ? a:2 : ''
     if pat == ''
         return
     endif
 
-    setlocal foldexpr=taskpaper#fold(v:lnum,pat)
+    setlocal foldexpr=taskpaper#fold(v:lnum,pat,ipat)
     setlocal foldminlines=0 foldtext=''
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
@@ -492,7 +493,8 @@ function! taskpaper#search_tag(...)
     endif
 
     if tag != ''
-        call taskpaper#search('\<@' . tag . '\>')
+        let ipat = (g:task_paper_search_hide_done == 1)?'\<@done\>':''
+        call taskpaper#search('\<@' . tag . '\>', ipat)
     endif
 endfunction
 

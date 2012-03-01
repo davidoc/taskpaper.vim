@@ -28,6 +28,11 @@ if !exists('g:task_paper_follow_move')
     let g:task_paper_follow_move = 1 
 endif
 
+" Hide @done tasks when searching tags
+if !exists('g:task_paper_search_hide_done')
+    let g:task_paper_search_hide_done = 0 
+endif
+
 " Add '@' to keyword character set so that we can complete contexts as keywords
 setlocal iskeyword+=@-@
 

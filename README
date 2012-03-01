@@ -133,6 +133,10 @@ To make the cursor stay in it's current location, change the `task_paper_follow_
 
     let g:task_paper_follow_move = 0
 
+If you want to hide done tasks when searching you can change the `task_paper_search_hide_done` variable.
+
+    let g:task_paper_search_hide_done = 1
+
 File-type Detection
 ====================
 
