@@ -47,10 +47,58 @@ function! taskpaper#delete_tag(tag, ...)
     return s:add_delete_tag(a:tag, value, 0)
 endfunction
 
+function! taskpaper#swap_tag(oldtag, newtag)
+    call taskpaper#delete_tag(a:oldtag)
+    call taskpaper#add_tag(a:newtag, '')
+endfunction
+
+function! taskpaper#swap_tags(oldtags, newtags)
+    for oldtag in a:oldtags
+        call taskpaper#delete_tag(oldtag)
+    endfor
+    for newtag in a:newtags
+        call taskpaper#add_tag(newtag, '')
+    endfor
+endfunction
+
 function! taskpaper#toggle_tag(tag, ...)
     if !taskpaper#delete_tag(a:tag, '')
         let args = a:0 > 0 ? [a:tag, a:1] : [a:tag]
         call call("taskpaper#add_tag", args)
+    endif
+endfunction
+
+function! taskpaper#has_tag(tag)
+    let cur_line = getline(".")
+    let m = matchstr(cur_line, '@'.a:tag)
+    if m != ''
+        return 1
+    else
+        return 0
+endfunction
+
+function! taskpaper#cycle_tags(...)
+    let tags_index = 0
+    let tag_list = a:000
+    let tag_added = 0
+    for tag_name in tag_list
+        let tags_index = tags_index + 1
+        if tags_index == len(tag_list)
+            let tags_index = 0
+        endif
+        let has_tag = taskpaper#has_tag(tag_name)
+        if has_tag == 1
+            let tag_added = 1
+            call taskpaper#delete_tag(tag_name)
+            let new_tag = tag_list[tags_index]
+            if new_tag != ''
+                call taskpaper#add_tag(new_tag, '')
+            endif
+            break
+        endif
+    endfor
+    if tag_added == 0
+        call taskpaper#add_tag(tag_list[0], '')
     endif
 endfunction
 
@@ -260,8 +308,15 @@ function! taskpaper#move(projects, ...)
 
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
-
+        if g:task_paper_follow_move == 0
+            execute lnum
+        endif
     return nlines
+endfunction
+
+function! taskpaper#move_to_project()
+    let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
+    call taskpaper#move(split(res, ':'))
 endfunction
 
 function! taskpaper#update_project()
@@ -347,11 +402,11 @@ function! taskpaper#archive_done()
     return deleted
 endfunction
 
-function! taskpaper#fold(lnum, pat)
+function! taskpaper#fold(lnum, pat, ipat)
     let line = getline(a:lnum)
     let level = foldlevel(a:lnum)
 
-    if line =~? a:pat
+    if line =~? a:pat && (a:ipat == '' || line !~? a:ipat)
         return 0
     elseif synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
         return 1
@@ -368,7 +423,7 @@ function! taskpaper#fold(lnum, pat)
             break
         endif
 
-        if line =~? a:pat
+        if line =~? a:pat && (a:ipat == '' || line !~? a:ipat)
             return 0
         endif
     endfor
@@ -377,11 +432,12 @@ endfunction
 
 function! taskpaper#search(...)
     let pat = a:0 > 0 ? a:1 : input('Search: ')
+    let ipat = a:0 > 1 ? a:2 : ''
     if pat == ''
         return
     endif
 
-    setlocal foldexpr=taskpaper#fold(v:lnum,pat)
+    setlocal foldexpr=taskpaper#fold(v:lnum,pat,ipat)
     setlocal foldminlines=0 foldtext=''
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
@@ -437,7 +493,8 @@ function! taskpaper#search_tag(...)
     endif
 
     if tag != ''
-        call taskpaper#search('\<@' . tag . '\>')
+        let ipat = (g:task_paper_search_hide_done == 1)?'\<@done\>':''
+        call taskpaper#search('\<@' . tag . '\>', ipat)
     endif
 endfunction
 
