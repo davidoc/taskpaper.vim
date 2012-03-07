@@ -47,6 +47,12 @@ function! taskpaper#delete_tag(tag, ...)
     return s:add_delete_tag(a:tag, value, 0)
 endfunction
 
+function! taskpaper#delete_tags(tags)
+    for tg in a:tags
+      call s:add_delete_tag(tg, '', 0)
+    endfor  
+endfunction
+
 function! taskpaper#swap_tag(oldtag, newtag)
     call taskpaper#delete_tag(a:oldtag)
     call taskpaper#add_tag(a:newtag, '')
