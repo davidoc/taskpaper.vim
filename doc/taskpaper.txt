@@ -1,17 +1,19 @@
-*taskpaper* TaskPaper file-type plugin and syntax file
+taskpaper.txt   For Vim version 6.0     Last change: 2012 March 13
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
-18th February 2012
+13th March 2012
 
 Introduction
 =============
 
+*Latest version from https://github.com/davidoc/taskpaper.vim*
+
 From the TaskPaper website (<http://hogbaysoftware.com/projects/taskpaper>):
 
-> "TaskPaper is a simple to-do list application that helps you stay
-> organized. Unlike competing applications, TaskPaper is based on plain text
-> files which offer you paper-like simplicity and ease of use." 
+"TaskPaper is a simple to-do list application that helps you stay
+organized. Unlike competing applications, TaskPaper is based on plain text
+files which offer you paper-like simplicity and ease of use." 
 
 TaskPaper is a to-do list application for Mac OS X based on the "Getting
 Things Done" approach of David Allen (<http://www.davidco.com/>). It supports
@@ -88,7 +90,7 @@ The plugin defines some new mappings:
     \tj     Go to next project
     \tk     Go to previous project
     \tg     Go to specified project
-    \tm     Move task to specified project 
+    \tm     Move task to specified project
 
 Note: if `<Leader>` has been changed (e.g. `:let mapleader=",,"`)
 then its value should be used instead of `\` in the mappings.
@@ -115,6 +117,9 @@ names with <Tab> on prompt.
 Configuration
 ==============
 
+The plugin supports a number of configuration variables, which can be set in
+your .vimrc file.
+
 To change the default date format string used when marking a task complete,
 define the `task_paper_date_format` variable. The format matches your system's
 `strftime()` function.
@@ -128,14 +133,25 @@ To change the default archive project name, define the
 
     let g:task_paper_archive_project = "Archive"
 
-By default, when you move a task, the cursor will follow that task to its new location.
-To make the cursor stay in it's current location, change the `task_paper_follow_move` variable.
+By default, when you move a task, the cursor will follow that task to its new
+location.  To make the cursor stay in it's current location, change the
+`task_paper_follow_move` variable.
 
     let g:task_paper_follow_move = 0
 
-If you want to hide done tasks when searching you can change the `task_paper_search_hide_done` variable.
+If you want to hide done tasks when searching you can change the
+`task_paper_search_hide_done` variable.
 
     let g:task_paper_search_hide_done = 1
+
+To set a custom style (colour, bold, etc.) for tags task_paper_styles variable,
+which is a dictionary.
+
+    let g:task_paper_styles={'wait': 'ctermfg=Blue guifg=Blue', 'FAIL':
+'ctermbg=Red guibg=Red'}
+
+See |highlight-args| for a full description of the syntax.
+
 
 File-type Detection
 ====================

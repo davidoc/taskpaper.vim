@@ -2,7 +2,7 @@
 " Language:	Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:	David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:		https://github.com/davidoc/taskpaper.vim
-" Last Change:  2012-02-08
+" Last Change:  2012-03-07
 
 if version < 600
   syntax clear
@@ -14,6 +14,11 @@ if version < 508
   command! -nargs=+ HiLink hi link <args>
 else
   command! -nargs=+ HiLink hi def link <args>
+endif
+
+" Define tag styles
+if !exists('g:task_paper_styles')
+    let g:task_paper_styles = {'FAIL': 'guibg=Red guifg=White'}
 endif
 
 syn case ignore
@@ -34,6 +39,8 @@ HiLink taskpaperProject       Title
 HiLink taskpaperDone          NonText
 HiLink taskpaperCancelled     NonText
 HiLink taskpaperComment       Comment
+
+call taskpaper#tag_style_dict(g:task_paper_styles)
 
 let b:current_syntax = "taskpaper"
 

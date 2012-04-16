@@ -2,7 +2,7 @@
 " Language:     Taskpaper (http://hogbaysoftware.com/projects/taskpaper)
 " Maintainer:   David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 " URL:          https://github.com/davidoc/taskpaper.vim
-" Last Change:  2012-01-29
+" Last Change:  2012-03-07
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -539,18 +539,44 @@ function! taskpaper#newline()
     let lnum = line('.')
     let line = getline('.')
 
-    if lnum == 1 || line !~ '^\s*$'
+    if lnum == 1 || line !~ '^\s*$' ||
+    \  synIDattr(synID(lnum - 1, 1, 1), "name") != 'taskpaperProject'
         return ''
     endif
 
     let pline = getline(lnum - 1)
     let depth = len(matchstr(pline, '^\t*'))
-    if pline !~ '\s\+-.*'
-        let depth = depth + 1
-    endif
-    call setline(lnum, repeat("\t", depth) . '- ')
+    call setline(lnum, repeat("\t", depth + 1) . '- ')
 
     return "\<End>"
+endfunction
+
+
+function! taskpaper#tag_style(...)
+    if a:0 > 0
+        let tag_name = a:1
+    endif
+
+    if a:0 > 1
+        let tag_style = a:2
+        let tag_style_name = 'taskpaperAutoStyle_' . tag_name
+        execute 'syn match' tag_style_name  '/\s\zs@'.tag_name.'\(([^)]*)\)\?/'
+        execute 'hi' tag_style_name tag_style
+        if version < 508
+            execute 'hi link'  tag_style_name tag_style_name
+        else
+            execute 'hi def link' tag_style_name tag_style_name
+        endif
+    else
+        echo "No style specified."
+        return ''
+    endif
+endfunction
+
+function! taskpaper#tag_style_dict(tsd)
+    for tag_name in keys(a:tsd)
+        call taskpaper#tag_style(tag_name,a:tsd[tag_name])
+    endfor
 endfunction
 
 let &cpo = s:save_cpo
