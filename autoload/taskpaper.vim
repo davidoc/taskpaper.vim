@@ -355,6 +355,7 @@ function! taskpaper#update_project()
 endfunction
 
 function! taskpaper#archive_done()
+    let current_lnum = line('.')
     let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
         call append('$', g:task_paper_archive_project . ':')
@@ -405,6 +406,7 @@ function! taskpaper#archive_done()
     let &l:foldenable = save_fen
     call setreg('a', save_reg[0], save_reg[1])
 
+    execute current_lnum
     return deleted
 endfunction
 
@@ -467,18 +469,18 @@ function! taskpaper#fold_except_range(lnum, begin, end)
 endfunction
 
 function! taskpaper#move_to_top()
-	silent dl
-	call taskpaper#previous_project()
-	silent put
+  silent dl
+  call taskpaper#previous_project()
+  silent put
 endfunction
 
 function! taskpaper#move_to_bottom()
-	silent dl
-	call taskpaper#next_project()
-	let pos = getpos('.')
-	let pos[1] = pos[1] - 1
-	call setpos('.', pos)
-	silent put
+  silent dl
+  call taskpaper#next_project()
+  let pos = getpos('.')
+  let pos[1] = pos[1] - 1
+  call setpos('.', pos)
+  silent put
 endfunction
 
 function! taskpaper#focus_project()
