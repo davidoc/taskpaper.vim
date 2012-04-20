@@ -469,18 +469,22 @@ function! taskpaper#fold_except_range(lnum, begin, end)
 endfunction
 
 function! taskpaper#move_to_top()
-  silent dl
-  call taskpaper#previous_project()
-  silent put
+		let current_lnum = line('.')
+		silent dl
+		call taskpaper#previous_project()
+		silent put
+		execute current_lnum
 endfunction
 
 function! taskpaper#move_to_bottom()
-  silent dl
-  call taskpaper#next_project()
-  let pos = getpos('.')
-  let pos[1] = pos[1] - 1
-  call setpos('.', pos)
-  silent put
+		let current_lnum = line('.')
+		silent dl
+		call taskpaper#next_project()
+		let pos = getpos('.')
+		let pos[1] = pos[1] - 1
+		call setpos('.', pos)
+		silent put
+		execute current_lnum
 endfunction
 
 function! taskpaper#focus_project()
