@@ -1,4 +1,4 @@
-taskpaper.txt   For Vim version 6.0     Last change: 2012 March 13
+*taskpaper.txt*   For Vim version 6.0     Last change: 2012 March 13
 
 David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
@@ -6,6 +6,7 @@ David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
 Introduction
 =============
+*taskpaper*
 
 *Latest version from https://github.com/davidoc/taskpaper.vim*
 
@@ -27,6 +28,7 @@ simple to-do list format.
 
 Installation
 =============
+*taskpaper-install*
 
 It should be safe to simply unpack the package into your .vim directory.
 It contains the following files:
@@ -51,6 +53,7 @@ you have done this you can access the help with this command:
 
 Syntax
 =======
+*taskpaper-syntax*
 
 The syntax file highlights project headings and task contexts (tags), and
 "greys out" completed tasks. The exact style of the displayed file depends
@@ -67,6 +70,7 @@ Other text is considered as a "note" and is displayed as a Vim comment.
 
 File-type Plugin
 =================
+*taskpaper-plugin*
 
 The file-type plugin tries to make editing TaskPaper files in Vim more
 comfortable.
@@ -74,6 +78,7 @@ comfortable.
 Vim can complete context names after the '@' using the keyword completion
 commands (e.g. Ctrl-X Ctrl-N).
 
+*taskpaper-mappings*
 The plugin defines some new mappings:
 
     \td     Mark task as done
@@ -116,6 +121,7 @@ names with <Tab> on prompt.
 
 Configuration
 ==============
+*taskpaper-config*
 
 The plugin supports a number of configuration variables, which can be set in
 your .vimrc file.
@@ -161,6 +167,7 @@ type for all files with the ".taskpaper" extension.
 
 Customize
 ==========
+*taskpaper-customize*
 
 You can create your own shortcut for tagging.  To define your own shortcut,
 write settings in ~/.vim/ftplugin/taskpaper.vim or ~/.vimrc.  If you use the
@@ -221,6 +228,7 @@ To update a tag (not delete if the tag exists):
 
 Licence
 ========
+*taskpaper-licence*
 
 Copyright (C) 2007--2012 by David O'Callaghan <david.ocallaghan@cs.tcd.ie>
 
