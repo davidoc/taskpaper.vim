@@ -39,6 +39,9 @@ setlocal iskeyword+=@-@
 " Tab character has special meaning on TaskPaper
 setlocal noexpandtab
 
+" don't show invisible characters when working on a taskpaper file
+setlocal nolist
+
 " Change 'comments' and 'formatoptions' to continue to write a task item
 setlocal comments=b:-
 setlocal fo-=c fo+=rol
