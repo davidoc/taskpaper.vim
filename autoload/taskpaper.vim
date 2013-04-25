@@ -47,6 +47,12 @@ function! taskpaper#delete_tag(tag, ...)
     return s:add_delete_tag(a:tag, value, 0)
 endfunction
 
+function! taskpaper#delete_tags(tags)
+    for tg in a:tags
+      call s:add_delete_tag(tg, '', 0)
+    endfor  
+endfunction
+
 function! taskpaper#swap_tag(oldtag, newtag)
     call taskpaper#delete_tag(a:oldtag)
     call taskpaper#add_tag(a:newtag, '')
@@ -349,6 +355,7 @@ function! taskpaper#update_project()
 endfunction
 
 function! taskpaper#archive_done()
+    let current_lnum = line('.')
     let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
         call append('$', g:task_paper_archive_project . ':')
@@ -399,6 +406,7 @@ function! taskpaper#archive_done()
     let &l:foldenable = save_fen
     call setreg('a', save_reg[0], save_reg[1])
 
+    execute current_lnum
     return deleted
 endfunction
 
@@ -458,6 +466,25 @@ function! taskpaper#fold_except_range(lnum, begin, end)
     endif
 
     return 1
+endfunction
+
+function! taskpaper#move_to_top()
+		let current_lnum = line('.')
+		silent dl
+		call taskpaper#previous_project()
+		silent put
+		execute current_lnum
+endfunction
+
+function! taskpaper#move_to_bottom()
+		let current_lnum = line('.')
+		silent dl
+		call taskpaper#next_project()
+		let pos = getpos('.')
+		let pos[1] = pos[1] - 1
+		call setpos('.', pos)
+		silent put
+		execute current_lnum
 endfunction
 
 function! taskpaper#focus_project()
