@@ -61,6 +61,8 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     \       :<C-u>call taskpaper#search_tag()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperSearchRange
     \       :<C-u>call taskpaper#search_tag_range()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperShowDueToday
+    \       :<C-u>call taskpaper#search_tag_range('due','',strftime('%Y-%m-%d'))<CR>
 
     nnoremap <silent> <buffer> <Plug>TaskPaperGoToProject
     \       :<C-u>call taskpaper#go_to_project()<CR>
@@ -96,6 +98,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>t/ <Plug>TaskPaperSearchKeyword
     nmap <buffer> <Leader>ts <Plug>TaskPaperSearchTag
     nmap <buffer> <Leader>tr <Plug>TaskPaperSearchRange
+    nmap <buffer> <Leader>to <Plug>TaskPaperShowDueToday
 
     nmap <buffer> <Leader>tg <Plug>TaskPaperGoToProject
     nmap <buffer> <Leader>tj <Plug>TaskPaperNextProject

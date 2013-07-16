@@ -87,6 +87,7 @@ The plugin defines some new mappings:
     \tD     Archive @done items
     \tX     Show tasks marked as cancelled
     \tT     Show tasks marked as today
+    \to     Show tasks that are due today or overdue
     \t/     Search for items including keyword
     \ts     Search for items including tag
     \tr     Search for items with a tag parameter in a range (literal)
