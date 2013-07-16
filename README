@@ -82,8 +82,10 @@ The plugin defines some new mappings:
     \tD     Archive @done items
     \tX     Show tasks marked as cancelled
     \tT     Show tasks marked as today
+    \to     Show tasks that are due today or overdue
     \t/     Search for items including keyword
     \ts     Search for items including tag
+    \tr     Search for items with a tag parameter in a range (literal)
     \tp     Fold all projects
     \t.     Fold all notes
     \tP     Focus on the current project
@@ -102,6 +104,14 @@ To show all tasks with a particular context tag, type `\ts` and a tag name to
 search.  If you use the `\ts` command over the desired context tag, the tag
 name is set as default value.  This will fold all the irrelevant tasks leaving
 only the tasks in the current context visible.
+
+To show all tasks with a particular context tag parameter
+(e.g. `@due(2013-07-26)`) being in a certain range, type `\tr` and a tag name,
+a minimum and a maximum. This will fold all irrelevant tasks, leaving
+only the tasks that have their parameter being inside the specified range.
+This is useful, for example, to show all tasks that have a specific due date.
+Not that the comparison is done based on string literals, i.e. "12" is less than "20".
+This is no problem for dates in ISO format (e.g. "2013-07-13").
 
 To fold all top-level projects leaving only the headings visible use the `\tp`
 command. Standard fold commands can be used to open (`zo`) and close (`zc`)

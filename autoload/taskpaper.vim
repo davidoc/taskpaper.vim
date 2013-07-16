@@ -327,7 +327,7 @@ function! taskpaper#update_project()
 
     for linenr in range(line('.'), 1, -1)
         let line = getline(linenr)
-        let ml = matchlist(line, '\v^\t{0,' . depth . '}([^\t:]+):')
+        let ml = matchlist(line, '\v^\t{0,' . depth . '}([^\t:]+):$')
         if empty(ml)
             continue
         endif
@@ -349,6 +349,8 @@ function! taskpaper#update_project()
 endfunction
 
 function! taskpaper#archive_done()
+    
+    " Search for the beginning of the archive section
     let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
         call append('$', g:task_paper_archive_project . ':')
@@ -366,6 +368,7 @@ function! taskpaper#archive_done()
     call cursor(1, 1)
     let deleted = 0
 
+    " Search for @done tasks
     while 1
         let lnum = search('@done', 'W', archive_start - deleted)
         if lnum == 0
@@ -375,7 +378,7 @@ function! taskpaper#archive_done()
         call taskpaper#update_project()
         let deleted += taskpaper#delete(lnum, 'A', 1)
     endwhile
-
+    " Also search after the archive
     if archive_end != 0
         call cursor(archive_end, 1)
 
@@ -400,6 +403,43 @@ function! taskpaper#archive_done()
     call setreg('a', save_reg[0], save_reg[1])
 
     return deleted
+endfunction
+
+function! taskpaper#fold_tag_range(lnum, tag, min, max)
+    " Fold lines based on the parameter of a tag, i.e. tag(param)
+    " and show only lines for which min <= param <= max
+    let line = getline(a:lnum)
+    let level = foldlevel(a:lnum)
+    
+    let rex = a:tag.'(\(.*\))'
+    let params = matchlist(line, rex)
+    if len(params) > 0
+        let parameter = params[1] 
+        if (parameter >= a:min) && (parameter <= a:max)
+            return 0
+        endif
+    " default behavior
+    elseif synIDattr(synID(a:lnum, 1, 1), "name") != 'taskpaperProject'
+        return 1
+    elseif level != -1
+        return level
+    endif
+
+    " TODO What happens here?
+    let depth = len(matchstr(getline(a:lnum), '^\t*'))
+
+    for lnum in range(a:lnum + 1, line('$'))
+        let line = getline(lnum)
+
+        if depth >= len(matchstr(line, '^\t*'))
+            break
+        endif
+
+        if line =~? a:pat && (a:ipat == '' || line !~? a:ipat)
+            return 0
+        endif
+    endfor
+    return 1
 endfunction
 
 function! taskpaper#fold(lnum, pat, ipat)
@@ -442,6 +482,29 @@ function! taskpaper#search(...)
     setlocal foldmethod=expr foldlevel=0 foldenable
 endfunction
 
+function! taskpaper#search_tag_range(...)
+    " Start a search (using folds to filter non-matching lines)
+    " based on the parameter of a tag, i.e. tag(param)
+    " and show only lines for which min <= param <= max
+    if a:0 > 0
+        let tag = a:1
+    else
+        let cword = expand('<cword>')
+        let tag = input('Tag: ', cword =~ '@\k\+' ? cword[1:] : '')
+    endif
+    let min = a:0 > 1 ? a:2 : input('Min: ')
+    let max = a:0 > 2 ? a:3 : input('Max: ')
+    if tag == ''
+        return
+    endif
+    " set min and max to ASCII 0 and 255 if nothing is set
+    let min = min == '' ? ' ' : min
+    let max = max == '' ? '~' : max
+
+    setlocal foldexpr=taskpaper#fold_tag_range(v:lnum,tag,min,max)
+    setlocal foldminlines=0 foldtext=''
+    setlocal foldmethod=expr foldlevel=0 foldenable
+endfunction
 function! taskpaper#fold_except_range(lnum, begin, end)
     if a:lnum > a:end
         return 1
