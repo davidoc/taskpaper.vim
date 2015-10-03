@@ -34,10 +34,10 @@ syn sync fromstart
 
 "highlighting for Taskpaper groups
 HiLink taskpaperListItem      Identifier
-HiLink taskpaperContext       Identifier
-HiLink taskpaperProject       Title
-HiLink taskpaperDone          NonText
-HiLink taskpaperCancelled     NonText
+HiLink taskpaperContext       String
+HiLink taskpaperProject       Identifier
+HiLink taskpaperDone          Comment
+HiLink taskpaperCancelled     Comment
 HiLink taskpaperComment       Comment
 
 call taskpaper#tag_style_dict(g:task_paper_styles)
